@@ -1,0 +1,5 @@
+Eden: the Evaluator of DEfinitive Notations
+
+Copyright (c) 1995-2001 The University of Warwick.  All rights reserved.
+
+Please see the file lib-tkeden/credits.txt

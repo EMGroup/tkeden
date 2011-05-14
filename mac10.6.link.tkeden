@@ -1,0 +1,1 @@
+gcc -m32 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -o tkeden Eden/libeden.a pcre-3.9/pcre.o Misc/libmisc.a Donald/libdonald.a Sasami/libsasami.a EX/libex.a Scout/libscout.a -ltk -ltcl -framework CoreFoundation -framework Carbon  -ldl -lm   nothing.c

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Build suitable bison
+(
+	cd bison-1.27
+	./configure
+	make
+)
+# Build suitable pcre
+make pcre
+
+# Configure
+./configure \
+--enable-debug --enable-depend \
+--with-curses-include="/usr/include" \
+--with-readline-include="-I/usr/include/readline" \
+--with-readline-lib="-lreadline" \
+--with-gl-include="-I/usr/include/GL" \
+--with-gl-lib="-lGL" \
+--with-bison="$PWD/bison-1.27/bison"

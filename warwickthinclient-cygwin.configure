@@ -1,0 +1,6 @@
+./configure --enable-debug --enable-depend \
+  --with-bison=/cygdrive/q/cygwin/bison/bin/bison \
+  --with-gl-include="-I/usr/include/w32api/GL" \
+  --with-gl-lib="-lopengl32" \
+  --with-curses-include=/usr/include/ncurses/ \
+  --with-curses-lib=/usr/lib/

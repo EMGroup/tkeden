@@ -1,0 +1,47 @@
+#!/bin/sh
+#
+# cscope
+#
+# $Id: cscope,v 1.7 2001/09/26 17:55:44 cssbz Exp $
+#
+# Ashley Ward, April 1999
+#
+# Call cscope (a program by Sun - sort of an intelligent front end to
+# grep) with the right sort of settings for tkeden.
+#
+# This is of course, only of some use on a Sun platform which has the cscope
+# tool installed :)
+#
+
+# Name of temporary file to use - uses the PID of this shell to make the
+# name unique.
+TEMPFILE=/var/tmp/cscope.ash.$$
+
+# Create the temporary file. Actually a little bit of shell so we can call
+# emacsclient with the correct arguments (can't set EDITOR to
+# 'emacsclient someargs' unfortunately). Note need to escape the $*
+# (which means all arguments passed to this shell). The sleep is so that
+# we have time to see any error messages.
+cat > $TEMPFILE <<EOF
+#!/bin/sh
+emacsclient --no-wait \$*
+sleep 1
+EOF
+
+# Make the temporary file executable.
+chmod +x $TEMPFILE
+
+# Make cscope invoke the file as an editor.
+EDITOR=$TEMPFILE; export EDITOR
+
+# Run cscope. Make it display which directory the code is in (-p2). It is
+# interested in C (.c and .h), lex (.l), and yacc (.y) source files, but
+# to get it to look at Eden and Tcl files in lib, I have to specify exactly
+# which files to look at rather than using the -s option for each directory.
+cscope -p2 Donald/*.[chly] EX/*.[chly] Eden/*.[chly] Misc/*.[chly] \
+	    Scout/*.[chly] LSD/*.[chly] Sasami/*.[chly] lib-tkeden*/*
+
+# Finally, remove the temporary file.
+rm $TEMPFILE
+
+exit 0

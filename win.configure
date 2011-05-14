@@ -1,0 +1,4 @@
+./configure --enable-debug --enable-depend \
+--with-tcl-lib="-ltcl80" \
+--with-tk-lib="-ltk80" \
+--with-gl-lib="-lopengl32"

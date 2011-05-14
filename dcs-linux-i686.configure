@@ -1,0 +1,12 @@
+#!/bin/sh
+
+./configure \
+--enable-dcc \
+--enable-debug --enable-depend \
+--enable-disable-sasami \
+--with-curses-include="/usr/include" \
+--with-readline-include="-I/usr/include/readline" \
+--with-readline-lib="-lreadline" \
+--with-gl-include="-I/usr/include/GL" \
+--with-gl-lib="-lGL" \
+--with-bison=/dcs/emp/empublic/bin/bison

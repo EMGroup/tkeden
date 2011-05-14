@@ -1,0 +1,13 @@
+#!/bin/sh
+
+TKEDEN_SRC=`pwd`
+
+./configure --enable-debug --enable-depend \
+  --enable-disable-sasami \
+  --with-bison=$TKEDEN_SRC/../../bison-1.28/src/bison \
+  --with-gl-include="-I/usr/include/w32api/GL" \
+  --with-gl-lib="-lopengl32" \
+  --with-curses-include=/usr/include/ncurses/ \
+  --with-curses-lib=/usr/lib/ \
+  --with-png-include=-I/usr/include/libpng12/ \
+  --with-png-lib=-lpng12

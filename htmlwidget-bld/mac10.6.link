@@ -1,0 +1,1 @@
+gcc -m32 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -fno-common -O0 -g -DOS_UNIX=1 -DOS_WIN=0 -shared -o tkhtml.dylib shhtmlcmd.o shhtmldraw.o shhtmlform.o shhtmlimage.o shhtmlindex.o shhtmllayout.o shhtmlparse.o shhtmlsizer.o shhtmltable.o shhtmltest.o shhtmlurl.o shhtmlwidget.o shhtmltokens.o -ltcl -ltk

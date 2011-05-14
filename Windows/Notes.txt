@@ -1,0 +1,37 @@
+
+Eden on PC notes
+================
+
+Using latest cygwin (setup.exe version 2.57, but packages vary).
+
+Use this to configure:
+  ./configure --enable-debug --enable-depend \
+  --with-tcl-lib="-ltcl80" \
+  --with-tk-lib="-ltk80" \
+  --with-gl-lib="-lopengl32"
+
+  ln -s x11includeslocation-fullpath /usr/include/X11
+as /usr/include/tk.h tries to include X11/Xlib.h, and it looks like
+X11 includes are not provided with cygwin any more (thus breaking
+their installation of Tk).  Keeping a copy of the X11 includes in
+Windows/cygwinX11.tar.gz just in case.  I got the X11 includes from an
+earlier version of cygwin.
+
+  ln -s tkPlatDecls.hlocation /usr/include/
+as cygwin doesn't seem to include this header, we can't find
+Tk_GetHWND.  Keeping a copy in Windows/tkPlatDecls.h just in case.  I
+got this file from the Scriptics Tcl/Tk Windows distribution (which is
+designed to be used with the Microsoft compiler presently :<).
+
+Hints on using cygwin:
+
+Had to add these lines to C:\CYGWIN\CYGWIN.BAT:
+REM added by Ash to get the pipe symbol working
+keyb us,,c:\windows\COMMAND\keyboard.sys
+... this doesn't work on Windows ME, so had to set the keyboard to US
+globally (grrr)
+
+Can use cygcheck [filename] to give ldd-like functionality (ie
+show the the dynamic libraries that an executable will use).
+
+gdb --nw to avoid the annoying windowing interface

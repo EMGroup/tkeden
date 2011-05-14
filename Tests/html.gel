@@ -1,0 +1,79 @@
+## This from <http://empublic.dcs.warwick.ac.uk/projects/gelHarfield2006/examples/html.gel> [Ash]
+
+%eden
+installangel();
+
+
+%angel
+
+htmlexample = window {
+   title = "HTML Example";
+   content = [myhtmlscroll,myhtml] };
+
+myhtml = html {
+   text = "";
+   side = "right";
+   fill = "both";
+   expand = 1 };
+
+myhtmlscroll = scrollbar {
+   scrolls = "myhtml";
+   orient = "vertical";
+   fill = "y";
+   side = "right" };
+
+
+
+%eden
+myhtml_text = "
+<h1>Interface Specification For The HTML Widget</h1>
+
+<p>This is a draft interface specification for the Tk HTML 
+widget currently under development.
+Since it is still a draft, it is subject to change.
+Eventually, the interface will stabilize and this interface
+specification will morph into a manual page.</p>
+
+<h2>Configuration Options</h2>
+
+<table cellspacing=10>
+
+<tr><td valign=top><tt>-appletcommand</tt></td>
+<td>
+  <p>This option specifies the name of the Tcl procedure to invoke when the
+  <tt>&lt;applet&gt;...&lt;/applet&gt;</tt> tag sequence is seen.  The html
+  widget will append two arguments to the procedure before calling it.
+  The first argument is the name of a widget that the callback should
+  create to hold the applet.  
+  The second argument is
+  a list of name/value pairs which are the arguments to
+  the <tt>&lt;applet&gt;</tt> tag.</p>
+
+  <p>The text between <tt>&lt;applet&gt</tt> and <tt>&lt;/applet&gt;</tt>
+
+  is normally suppressed.
+  However, if the <tt>-appletcommand</tt> option is set to the empty string,
+  the <tt>&lt;applet&gt</tt> tag is ignored and all text between
+  <tt>&lt;applet&gt;</tt> and <tt>&lt;/applet&gt;</tt> is displayed
+  normally.</p>
+
+  <p>'&lt;embed&gt;' is treated as an alias for
+     '&lt;applet&gt;&lt;/applet&gt'.</p>
+
+</td></tr>
+
+<tr><td valign=top><tt>-background</tt></td>
+<td>
+  <p>The background color for the widget.</p>
+
+  <p>Note that the <tt>&lt;body bgcolor=...&gt;</tt> HTML tag does not
+  automatically cause the widget to change its background color.  If
+  you want the background color to change in response to this HTML tag,
+  then your Tcl script should intercept
+  the <tt>&lt;body&gt;</tt> tag using the
+  ``<tt>token handler</tt>'' widget command (described below) and
+  change the background color manually.</p>
+
+</td></tr>
+</table>
+";

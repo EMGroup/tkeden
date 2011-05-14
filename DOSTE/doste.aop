@@ -1,0 +1,75 @@
+%eden
+
+func remove_last {
+	para lst;
+	auto result,i;
+	result = [];
+	for (i=1; i<lst#; i++) {
+		result = result // [lst[i]];
+	}
+	return result;
+}
+
+%aop
+
+<cadence_sep> = <cadence_statement> ";" <cadence_statement>
+	: ignore [bras, sq_bras]
+	: do {  } later
+	| <cadence_statement>;
+
+<cadence_statement> = <cadence_path> "is" <cadence_path>
+	: ignore [bras, sq_bras]
+	: do {
+		define(_doste_query(remove_last($p1)),(type($p1[$p1#])=="list") ? _doste_query($p1[$p1#]) : $p1[$p1#],($p2# == 1) ? $p2[1] : $p2);
+	} later
+	| <cadence_statement2a>;
+
+<cadence_statement2a> = <cadence_path> "=" <cadence_path>
+	: ignore [bras, sq_bras]
+	: do {
+		define(_doste_query(remove_last($p1)),(type($p1[$p1#])=="list") ? _doste_query($p1[$p1#]) : $p1[$p1#],_doste_query($p2));
+	} later
+	| <cadence_statement2>;
+
+<cadence_statement2> = "?" <cadence_path>
+	: ignore [bras, sq_bras]
+	: do { fprintf(stdout, doste_name(_doste_query($p1))); } later
+	| <cadence_statement4>;
+
+
+<cadence_statement4> = (#.*)
+	| <cadence_path>;
+
+<cadence_path> = <cadence_path> "." <cadence_path>
+	: ignore [bras, sq_bras]
+	: do { $v = $p1 // $p2; } later
+	| <cadence_path2>;
+
+<cadence_path2> = "(" <cadence_subpath>
+	: do { $v = [$p1]; } later
+	| <cadence_object>;
+
+<cadence_subpath> = <cadence_path> ")"
+	: do { $v = $p1; } later
+	| <cadence_error>;
+
+<cadence_object> = ([a-zA-Z0-9][a-zA-Z0-9]*)
+	: do { $v = ["$t"]; } now
+	| <cadence_object2>;
+
+<cadence_object2> = "<" <cadence_object3>
+	: do { $v = $p1; } later
+	| <cadence_error>;
+
+<cadence_object3> = <cadence_object4> ">"
+	: do { $v = $p1; } later
+	| <cadence_error>;
+
+<cadence_object4> = ([1-9][0-9]*)
+	: do { $v = [$t]; } now
+	| <cadence_error>;
+
+<cadence_error> = *
+	: do { writeln("Cadence Error ", "$t");} now;
+
+notation %cadence = <cadence_sep> split on "\n";

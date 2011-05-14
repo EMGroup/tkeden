@@ -1,0 +1,8 @@
+#
+# $Id: Makefile.in,v 1.4 2001/07/27 16:22:10 cssbz Exp $
+#
+
+SOURCES = doste.cpp
+
+LIB = libdoste.a
+

@@ -1,0 +1,10 @@
+/* converts a list returned by ftime() into a floating point
+   number in seconds */
+func ftimeToSecs {
+  para t;
+  return t[1]+(t[2]/1000.0);
+}
+
+start=ftime(); for (i=0; i<1000000; i++) { /* do nothing */ }; end=ftime();
+
+writeln(ftimeToSecs(end)-ftimeToSecs(start));

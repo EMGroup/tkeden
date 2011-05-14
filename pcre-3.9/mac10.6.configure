@@ -1,0 +1,1 @@
+CC=cc CFLAGS="-m32 -m32 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -O0" ./configure

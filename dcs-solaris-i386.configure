@@ -1,0 +1,11 @@
+./configure --enable-debug --enable-depend \
+--with-tcl-include="-I/dcs/emp/empublic/include" \
+--with-tcl-lib="-L/dcs/emp/empublic/solaris-i386/lib -ltcl8.3" \
+--with-tk-include="-I/dcs/emp/empublic/include" \
+--with-tk-lib="-L/dcs/emp/empublic/solaris-i386/lib -ltk8.3" \
+--with-gl-include="-I/dcs/emp/empublic/include" \
+--with-gl-lib="-L/dcs/emp/empublic/solaris-i386/lib -lGL"
+
+#--with-dmalloc-include=/dcs/emp/empublic/include \
+#--with-dmalloc-lib=/dcs/emp/empublic/solaris-i386/lib
+#--enable-ipc

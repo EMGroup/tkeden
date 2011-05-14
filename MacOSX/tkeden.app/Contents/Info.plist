@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
+<plist version="0.9">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>eden</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Eden file</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>EDEN</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>donald</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Donald file</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>DONA</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>scout</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Scout file</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>SCOU</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sasami</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Sasami file</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>SASA</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>eddi</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Eddi file</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>EDDI</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>script</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Script (multi-notation) file</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>SCRI</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>tkeden</string>
+	<key>CFBundleGetInfoString</key>
+	<string>tkeden TKEDENVERSION; Copyright (c) 1995-THISYEAR The University of Warwick</string>
+	<key>CFBundleIdentifier</key>
+	<string>uk.ac.warwick.dcs.tkeden</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>tkeden</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>tkeden TKEDENVERSION</string>
+	<key>CFBundleSignature</key>
+	<string>TKED</string>
+	<key>CFBundleVersion</key>
+	<string>TKEDENVERSION</string>
+	<key>CFBundleIconFile</key>
+	<string>tkeden.icns</string>
+</dict>
+</plist>

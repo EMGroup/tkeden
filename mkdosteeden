@@ -1,0 +1,8 @@
+#!/usr/bin/sh
+#g++ -o ttyeden   Eden/libeden.a pcre-3.9/pcre.o Misc/libmisc.a DOSTE/libdoste.a -L -L/ncurses -lreadline -lncurses -ldl -lm   nothing.c -L/dcs/acad/wmb/public/projects/misc/CADENCE/lib -ldoste
+
+cd ./DOSTE
+./mkdoste
+cd ..
+
+g++ -o tkeden   Eden/libeden.a pcre-3.9/pcre.o Misc/libmisc.a Donald/libdonald.a Sasami/libsasami.a EX/libex.a Scout/libscout.a  DOSTE/libdoste.a -ltk -ltcl -lGL -L/usr/X11R6/lib -lSM -lICE -lpng -lXt -lX11 -lXmu -lXext  -ldl -lm   nothing.c -L/dcs/acad/wmb/public/projects/misc/CADENCE/lib -ldoste

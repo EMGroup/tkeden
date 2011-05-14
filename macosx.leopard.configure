@@ -1,0 +1,25 @@
+#!/bin/sh
+TKEDEN_SRC=`pwd`
+
+./configure \
+--enable-depend --enable-debug \
+--enable-disable-sasami \
+--with-readline-include="-I/usr/include/readline" \
+--with-readline-lib="-lreadline" \
+--with-curses-include="/Developer/SDKs/MacOSX10.5.sdk/usr/include" \
+--with-png-include="-I/Developer/SDKs/MacOSX10.5.sdk/usr/X11/include/libpng" \
+--with-png-lib="-L/Developer/SDKs/MacOSX10.5.sdk/usr/X11/lib -lpng" \
+--with-tcl-include="-I/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Tcl.framework/Headers" \
+--with-tk-include="-I/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Tk.framework/Headers -I/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Tk.framework/Headers/tk-private" \
+--with-tcl-lib="/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Tcl.framework/Tcl" \
+--with-tk-lib="/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Tk.framework/Tk" \
+--with-embedded-tcl-tk-frameworks="/Users/echan/tkeden/latest/tcltk-embedded/Frameworks" \
+--with-bison="$TKEDEN_SRC/bison/bin/bison"
+
+
+#--includedir="/Developer/SDKs/MacOSX10.5.sdk/usr/include" \
+#--oldincludedir="/Developer/SDKs/MacOSX10.5.sdk/usr/include" \
+#--libdir="/Developer/SDKs/MacOSX10.5.sdk/usr/lib" \
+#--with-gl-include="-I/usr/X11/include/GL" \
+#--with-gl-lib="-lGL" \
+#--with-bison=/usr/bin/bison

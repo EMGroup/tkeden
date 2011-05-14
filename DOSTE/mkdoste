@@ -1,0 +1,3 @@
+#!/usr/bin/sh
+g++ -c -o libdoste.a -I/dcs/emp/empublic/doste32-rh4/include -L/dcs/emp/empublic/doste32-rh4/lib doste.cpp
+

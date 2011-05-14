@@ -1,0 +1,14 @@
+./configure --enable-debug --enable-depend \
+--with-cc=/gnu/bin/gcc \
+--with-tcl-include="-I/dcs/emp/empublic/include" \
+--with-tcl-lib="-L/dcs/emp/empublic/solaris-sparc/lib -ltcl8.3" \
+--with-tk-include="-I/dcs/emp/empublic/include" \
+--with-tk-lib="-L/dcs/emp/empublic/solaris-sparc/lib -ltk8.3" \
+--with-gl-include="-I/dcs/emp/empublic/include -I/dcs/emp/empublic/include/GL" \
+--with-gl-lib="-L/dcs/emp/empublic/solaris-sparc/lib -lGL" \
+--with-png-include="-I/dcs/emp/empublic/solaris-sparc/include" \
+--with-png-lib="-L/dcs/emp/empublic/solaris-sparc/lib -lpng"
+
+#--with-dmalloc-include=/dcs/emp/empublic/include \
+#--with-dmalloc-lib=/dcs/emp/empublic/solaris-sparc/lib
+#--enable-ipc

@@ -1,0 +1,10 @@
+./configure --enable-debug \
+--with-tcl-include="-I/Users/ashley/Desktop/EDEN/Togl/MacOSX/TclTkInstall/build/tcl/Tcl.framework/Headers" \
+--with-tk-include="-I/Users/ashley/Desktop/EDEN/Togl/MacOSX/TclTkInstall/build/tk/Tk.framework/Headers -I/Users/ashley/Desktop/EDEN/Togl/MacOSX/TclTkInstall/build/tk/Tk.framework/PrivateHeaders" \
+--with-tcl-lib="/Users/ashley/Desktop/EDEN/Togl/MacOSX/TclTkInstall/build/tcl/Tcl.framework/Tcl" \
+--with-tk-lib="/Users/ashley/Desktop/EDEN/Togl/MacOSX/TclTkInstall/build/tk/Tk.framework/Tk" \
+--enable-depend \
+--with-png-include="-I/sw/include" \
+--with-png-lib="-L/sw/lib -lpng" \
+--enable-debug \
+--with-embedded-tcl-tk-frameworks=/Users/ashley/Desktop/EDEN/Togl/MacOSX/TclTkInstall/embedded/Applications/Utilities/Wish\ Shell.app/Contents/Frameworks

@@ -1,0 +1,1560 @@
+-*-text-*-
+
+==============
+EDEN TODO LIST
+==============
+
+BUG details are now held in the SourceForge database: see
+http://sf.net/projects/eden
+
+
+IMPROVEMENTS
+============
+
+o Exactly how inefficient is the list implementation in tkeden? Does it scan
+  from the end each time? How would we go about storing an entire dictionary
+  in Eden for example, for Hangman?
+o Find original Donald lexer lex.l - see what changes were made for the
+  (handwritten?) lex.c in tkeden
+o Check out hash function used in Eden/symbol.c. Will the hash index ever be
+  > 0xFF: constantly EORing with a char...???
+o Profile tkeden and improve most called regions, especially for Chris'
+  Data Explorer...
+o Another notation, like Scout, to handle whole windowing system? Carters
+  says hard because X assumes user has control of windows, not the program.
+o Sort out inconsistencies between notations.
+o Think about JVM and relation to the Eden VM - what possibility of cross
+  fertilization?
+o "add layers to donald through scout" (from TODO)
+o "Wrap standard I/O in a tk window" (from TODO)
+o Remove reliance on PATH (eg ImageScale uses 'pnmscale'). Either
+  write a wrapper or set variables with the complete path for each utility
+  used.
+o A single step facility to enable modeller to monitor each redefinition?
+o dtkeden in heterogenous environments?
+o Vastly improve the textual script viewer: hyperlinked definitions, fast
+  rebuild... link to a web browser? Write an Eden script to communicate with
+  Netscape (or any browser) and send the text of the script.
+  Eg netscape -remote 'openURL(http://www.dcs.warwick.ac.uk/modelling)'
+o Higher order definitions somehow? Multiple similar definitions cannot be
+  done particularly neatly at the moment. Or can they? See the speedo eg.
+o Link Javabeans with dependencies in Eden. Use, or at least look at jacl?
+o Get rid of alloca? See http://www.eskimo.com/~scs/C-faq/q7.32.html
+o Automatically generate dependencies for non-local variables used in
+  functions - recall note from the back of the Eden manual. Don't retrigger
+  actions though.
+o Maybe Misc should be a subdirectory (or maybe just in the directory of?)
+  Eden
+o Make lint happy with the code. Haven't got it to run the second stage yet.
+o Use an enum for the type inside Datum - would this show up in debuggers,
+  making it easier to see?
+o New feature, perhaps built in: generate increments to a clock integer at
+  a given real time frequency
+o Look at BLT and integrate some features?
+o Store definitions on disc rather than in memory - like VM? Need a better
+  file format. WMB said would be good to be able to bring in and take out
+  whole sections of script as appropriate.
+o "combination observables" (eg distances between billiard balls) that can be
+  defined, but don't take up space until you query them. Or perhaps these are
+  just functions.
+o Link the Eden library to Java using JNI?!
+o Perhaps the symbol table should be a /list/ with special (associative)
+  indexing. Then items could be removed easily.
+o Re-do the user interface in Scout?
+o Operators += etc only work on integers
+o An emacs highlighting setup for Eden code?  See
+  /gnu/share/emacs/20.3/lisp/font-lock.el.
+o symbols() only takes one argument?  Should give an error message if given
+  more than one.
+o Link with emacs as an editor.  Use elisp.  Colours to represent bits that
+  have been changed, and need sending to tkeden - send them with a key press.
+o Finish mouse dragging facility - can we get COG to work with the current
+  setup?
+o Get around sensible CWD problem on Windoz by adding a cd primitive to
+  Eden, and call this from Run.e files
+o More obscure information in About tkeden should appear only when you
+  press a "more information" button
+o Edit menu with Cut and Paste?
+o Make it possible for users to link in other translators for notations at
+  runtime.
+o Some way to see /values/ of Donald things without having to
+  representation on the screen - view values in the View window...?  Or
+  implement the ? operator in Donald properly (seems to be partially
+  implemented at the mo... or am I being confused by the ? Donald operator
+  for "this is a line of Eden?")
+o Access Eden lists from Donald:
+    %eden
+    func f { writeln("f ", $); return $1 + 1; }
+    %donald
+    int f1
+    f1 = f!(1)
+  works, but the equivalent for lists does not.
+o List indexing is not implemented in back-ticks:
+    1:> s="l[2]";
+    2:> l=[1,3];
+    3:> writeln(`s`);
+    @
+o One undefined item should not stop the entire screen from being updated.
+o symboltable()# fails when the table gets large - error running out of
+  heap?  Could make heap a dynamic array, I suppose...
+o Fix undefined problems: need more eager operators.
+o Get rid of "program too big" error: make prog a more dynamic array that
+  is realloc'd when this error would have occurred
+o Donald 'pi' token - is it used?  Meurig was trying to '%donald; real pi'.
+o Port Sasami to Unix
+o A 'warnings' window instead of the error messages appearing in the
+  history.  Visual warning to the user when something has appeared there.
+  Warnings for "you have declared a symbol with a name similar to another",
+  "this is now @" etc along with error messages (which would prob. be in a
+  different colour).  Sometimes it is appropriate to warn a user that they
+  are creating a new symbol (eg when /using/ a model), when building -
+  probably not.
+o a minor version number to represent changes to the Tcl / Eden library stuff?
+o change each sprintf to snprintf and include the buffer size to attempt to
+  stop all these buffer overruns.
+o Radio button for the notation in the input window?
+o Make long variable names possible (apparently >20 chars fails, especially
+  in Scout)
+o ttyeden readline: get it to complete from the symbol table and built-ins.
+o "Freeze" the state function - want the equivalent of SQLs COMMIT or
+  ROLLBACK.
+o A "save script" function for ttyeden: could rapidly prototype using the
+  new readline interface, but cannot save.
+o guessLibLocation should read search a predetermined path to find a
+  configuration file which determines the lib files location.
+o 'find' symbols facility should be better: need to be able to find
+  definitions and usages separately.  Need to be able to find 'is'
+  separately from values.
+o Navigation around the view definitions interface is awful.
+o A function to 'forget' a set of definitions in the correct order?
+  Perhaps by redefining all to @, then removing.  Perhaps it should
+  interactively prompt to make sure that we don't accidently remove
+  definitions we would like to keep: a kind of 'rm -i' prompt.  Perhaps it
+  could print some information about whether it managed it or not.  Perhaps
+  we need an argument to tell it to be interactive or not.
+o Redesign into a one-window interface?  Then have multiple input windows,
+  one for each notation?
+o Inconsistency: textbox and text windows in scout with the same number of
+  vertical lines are different sizes.
+o Inconsistency: use outlinecolor for circles outline, color for lines
+  outline.
+o Inconsistency: use div in donald, / in eden.
+o Inconsistency: use semicolons in eden, not in donald
+o Inconsistency: don't declare in eden, declare in donald.
+o Inconsistency: last element of a scout window doesn't have a comma, the
+  others do.
+o Inconsistency: PI in eden, pi in donald
+o Inconsistency: scout references its windows from the top left and donald
+  from the bottom left
+o If any element in the screen is @, the whole screen is not displayed
+  (apparently).  Improve this to give a warning if something in the screen
+  is @.
+o '?insert', '?append' fails.  This is because the parser expects '?',
+  lvalue and keywords such as insert and append are not lvalues.  Need to
+  figure out how to get the parser to accept these types.
+o Test new Eden bison.simple with eden < file, read file, piped input (via
+  a translator)...
+o Link translators (eg eddi) to tkeden via pipes (tkeden pipe function?)
+  and multiple Tcl windows
+o wouldBlock: change to getcWouldBlock and put in rl_getc_wouldblock logic
+o Check "additional possibilities" sum in bison.simple - does it give the
+  right answer?
+o View -> Eden definitions: an option to sort and indent according to
+  definition level?  (This could be used to quickly find the basic model
+  parameters).
+o Make a documentation package: cron job to nightly tar and gzip the HTML
+  Eden, Scout, Donald documentation (post-SSI processing: wget? need
+  version numbers or stamp package with the date: make the package each
+  night and see if it has changed).
+o Change colour of interrupt button when it might be necessary to press it
+  (when a RunSet is being processed?)
+o Make it possible to extend the stack when overflow occurs by implementing
+  a non-contiguous stack.  Need to ensure that nothing attempts to walk the
+  stack to be able to do this tho'.
+o Make it possible to extend the heap when overflow occurs.  (Example
+  problem: see OASYSPermutations/gen_table.e).  Perhaps allocate memory
+  with malloc when heap overflows.
+o Highlight Eden / Donald / Scout keywords in the input window as they are
+  entered using the Tcl text tag facility?
+o Extend debug() to take combinations of categories to filter debugging
+  output, now that I've introduced CALSTK etc.
+o In the View Definitions window, use tags to highlight references to other
+  variables - click and they are displayed.  Add a back and forward button
+  as per web browser.  Or perhaps write an export to HTML feature and link
+  with a web browser?  (Perhaps use EMHTTP - press Reload on the web
+  browser and it'll reload the page of definitions).
+o An incremental search facility on Ctrl-S, like emacs?
+o Use a more decent File -> Include widget: try FileSelectBox from Tix (but
+  these widgets are megawidgets which probably required [incr Tcl] and
+  [incr Tk] - the OO extensions to Tcl/Tk).
+o Take a look at TkTable - a spreadsheet / table widget: could we improve
+  the View Definition windows with this?
+o Change the mouse cursor when tkeden is busy (see example from Tk FAQ #4.3
+  How do I change the Tk cursor?).
+o A +/- button in View Eden Definitions to expand / contract display of
+  agents (eg AGENT system should probably be contracted most of the time).
+o Put an error message pane underneath the input window (+ make it possible
+  to resize it?)
+o Separate error stream into another Tcl window.
+o configure.in: can we cache more?
+o Option to update "View Eden Definitions" continuously (actually, on every
+  RunSet switch).
+o Link Prev, Next Tcl history (in tkeden and ttyeden) with the history
+  as stored on file (a bit like the shell).
+o Wrap Sasami window in Scout
+o Feed mouse placement in Sasami window to Eden (perhaps in terms of a list
+  of polygons that the mouse is currently over - Benjohn describes a
+  technique involving turning the OpenGL renderer into a special mode, and
+  rendering a window one pixel in size).
+o " %scout" - make ex.c ignore leading spaces / tabs
+o Inp_Dev_Save might be an unnecessary hack: perhaps Inp_Dev should be
+  volatile?
+o When opening the Scout window, if there is any content outside, make it
+  bigger.
+o Get Scout/print.c printdef to use the constants array etc
+o Fix Scout so that on View Scout or Scout ? query, the correct value of
+  sensitive is shown
+o Input window: an Undo function (particularly wrt paste / insert)
+o Improve Scout / Donald unhelpful "parse error"
+o Fix tcl("reinit");
+o Un-hack the dashed line stuff using the Dash patch in Tcl / Tk 8.3.3...
+o Add a File->cd
+o "a=1; while (1) { a++; }" causes tkeden to hang: not even the Interrupt
+  button works (but Ctrl-C does) - is it possible to make the event
+  from the Interrupt button be processed straight away (despite Tcl update
+  not having been called - perhaps via some sort of error mechanism?) but
+  leave the other events until Eden is ready, as before?
+o Sasami: remove the globTogl hack
+o Recode all references to interp->result (see Tcl_SetResult(3))
+o Add some syntax to allow removal of triggers: ~>![] ? (if ![] is valid
+  syntax elsewhere)...
+o Resize viewport: if viewport size has not changed, don't do anything.
+o A View Sasami Definitions window for completeness
+o Can we rework Sasami's numeric IDs into symbolic ones for ease of
+  tracing...?
+o Replace the multiple Save options with Save and Save As options,
+  with radio buttons to turn off saving of various notations in the
+  dialogue box.
+o Don't create required windows (eg History) until it is actually
+  required to speed initial startup?
+o Windows: Try and get the executable to use the Scriptics-provided
+  DLLs (so can use Tcl 8.3 with the dash patch etc)?  Perhaps look at
+  using the tcl-stub stuff...?
+o Sasami: [Ben] Smooth vertex normals based on face normals and face
+  adjacency
+o [Ben] Speed controller example shows some display corruption
+o [Ben] Note : Enormous (40 units+) polygons screw up lighting. OpenGL
+  driver bug?  (Addition) Not necessarily bug. Maybe something to do with
+  oblique specular angles on large polys looking wrong (despite being
+  "right" in a mathematical sense). Imagine a poly large enough that the
+  vertices on both sides had specular hilights and then interpolate
+  across...
+o Install a non-debugging version for DCS for performance??
+o Rework Misc functions in the style of random if they are declared in
+  system header files
+o Change Scout int_tree assertion to a more helpful error, or modify the
+  Scout parser to only allow integer values.
+o Find should beep when search proceeds beyond the end or beginning of the
+  document.
+o Finish Help -> About Donald, Scout, Sasami
+o Help -> About LSD
+o Remember the state of file type selection between File -> Opens etc
+o File -> Restart !
+o Find in the Quick Reference Guide windows...
+o Can we get the OK button in the Quick Reference Guide windows to take up
+  less space?
+o DFfont is read by Donald at Donald startup, but Donald lacks dependency
+  in this area and it's difficult to convince it to re-render the
+  statechart with a new font (for example), whereas Scout seems to be
+  better implemented here.
+o Un-hack the Scout integer / real implementation (give Scout true integers
+  and true reals).
+o Remove "VB-like" features completely.
+o Query ? operator now shows sp->master, but this pretty much always seems
+  to say "input".  Can we change sp->master or get information from
+  elsewhere that would make this more useful?  Need to look at the calls to
+  pushMasterStack() and what that actually does.  Perhaps push the stack
+  trace so far: "input window:proc p:action q"?
+o Do 'Previous' after error & move cursor to position of error (making
+  interaction with tkeden somewhat like interaction with a debugger)
+o Save definitions should not save the ones belonging to 'system'.
+o %scout causes a few system definitions to be entered under agent 'input'
+o ON should actually be MOUSEBUT + KEYS or something, so can narrow down
+  the sensitivity even further (ignore keys, for example).
+o "%scout\nscreen &= <window>;" doesn't work - I presume the parser needs
+  correcting to allow display literals after &=
+o An eden_allow_proc_redefine variable (at the moment, redefining a
+  proc to a value is not allowed so as to avoid accidental overwriting
+  - but sometimes this can be useful).
+o An eden_allow_builtin_redefine variable?
+o Sometimes the error message needs to read from further back than
+  just the current line (eg when the line before is missing a
+  semi-colon in Scout).
+o Can we make it unnecessary to declare Eden variables to Scout?
+o On an error condition, should make sure that the line containing the
+  error (which was hence ignored) does not appear in history.  This is
+  complicated by the fact that the contents of the input window is
+  currently put into history in its entirety.  Perhaps Eden itself
+  should push things into history as it executes.
+o one-line escape into Scout, Donald... whatever... from Eden.
+  Perhaps a notation change with characters on the same line (eg
+  '%scout int i') would be a change for that line only?
+o Add __PRETTY_FUNCTION__ to DEBUGPRINT output?  (See gcc.info...)
+o Which way up are the coordinate systems in Donald, Scout and Sasami?
+  Document in the quick references.
+o Add a way of stating literal strings without needing to escape
+  characters to Eden - perhaps like the shell << operator (usage eg:
+  cat <<EOF
+  stuff that doesn't need escaping
+  EOF).
+o A 'help' command in ttyeden
+o Only tell re eden_notice_undef_reference on every 20th error, say
+o Tcl update on error, so that the error window doesn't appear to be blank
+  when we have a series of errors (although the 'update' has caused
+  problems in the past).
+o Add type information to ? output
+o Can we give more information during the "reference to undefined variable"
+  message?
+o Don't try and do dashes with Tk <8.3: info tclversion, info patchlevel
+o Give some sensible error message if can't find initial library files
+  rather than just "Tcl errorInfo... blank"
+o Link with Tcl/Tk stubs instead to remove the dependency upon exact Tcl/Tk
+  version (eg currently linking with 8.3 here, but 8.2 will probably do on
+  most Linux systems).  Or perhaps stubs are about Tcl extensions?
+o Add Tk img package lib to Windows distribution...
+o Change _tkeden_showxoutput to _introspect_xoutput.  Then make it redefine
+  a symbol.  Can then add a proc to print it out, or do something more
+  clever.  In fact, change all writes to fds to change variables which may
+  then trigger some output.
+o Donald, Scout etc should not have their own symbol table - the
+  information should be stored in the Eden symbol table.
+o Some kind of interface telling when something has changed / been added.
+  This could be used to interface to an editor, a filesystem, a graphic
+  representing doorbell data?
+o sprintf should truncate to strlen of first argument, then remove checking
+  in donald.init.e + change FAQ entries
+o Integrate the "Alpha" (cross-platform?) editor which seems to be mainly
+  written in Tcl as an on-line editor for definitions
+o Rename stuff in trans.e (or perhaps use virtual agency?) so it doesn't
+  stomp on any existing models
+o Redo Arca translator in Chris Brown style?
+
+o Scout screen_width etc are system definitions - should be read only by
+  the user and possibly not appear in View Scout Definitions...?
+
+o sensitive MOTION etc settings not shown in View Scout... (and Save Scout)
+
+o Projects database model
+
+o A slide presentation notation?
+
+o Change DCS old date-based tkeden versions to numeric ones (0.9 and
+  lower).
+
+o Don't record duplicate entries in keyboard history (ttyeden... tkeden?)
+
+o Fix bug: trying to do notation() on the same notation twice will probably
+  cause the parser to mess up and certainly causes the radio button
+  handling code to attempt to create the same window twice and mess up.
+
+o Remove all traces of Patrick's mouseClick stuff (in Scout/symbol.c:
+  automatically created '_click' procedure etc).  Figure out a solution for
+  reworking models that used this feature.
+
+o An //= operator, or make += work on strings (first option probably better
+  as + is not overloaded for strings).
+
+o Procedural aspects of notations should go.  Eg % for changing notation
+  (blocks of notation should be delimited another way -- with brackets?),
+  >> has the same problem, replace autocalc=0; with autocalc--; etc...
+
+o dtkeden: command line option for automatically logging in as a certain
+  agent.
+
+o A solution for running large-area models on small screens (how to
+  redefine the font size... and all geometry?)
+
+o Changing nSegments in cruise speedo apparently causes a freeze.
+
+o Lack of a scrollbar in the DOS window causes problems on Windows.  Need a
+  solution: perhaps wrap stdout in a tk window... or can we redefine the
+  Eden 'stdout' variable?  Nope -- the value changes, but doesn't affect
+  writeln etc....  Can we copy cmd.exe (not command.exe) from an NT machine
+  and see if that gives us a scroll bar?
+
+o "ash"[1] is a syntax error
+
+o s='s'; writeln(s[1]) fails.  Not possible unless I can figure a way of
+  getting the address of a char.  Aha... try ctos()...
+
+o "index out of range" errors don't give information about which type of
+  command produced the error
+
+o ImageScale still has problems.  It may work OK with .ppm input files on
+  UNIX, if pnmscale is in your path (at DCS it is
+  /usr/local/bin/pbm/pnmscale).
+
+o Find... dialogs should not be modal (ie should not stop rest of
+  application working...)
+
+o Rework View Scout, Donald... window menus to have an Edit menu, as per
+  View Eden...
+
+o Print information from the entire Inp_Dev stack when printing error
+  messages (this should provide a kind of stack trace)
+
+o Does beep counter reset on every beep?  Ie if we have a continuous
+  beeping situation (eg interpreting a bunch of Eden in EDDI by mistake),
+  it should not beep at all instead of beeping every three seconds.
+
+o Make notation change in ttyeden persist across EOF (including -e).
+
+o Page down in View Eden Definitions seems to work on Windows but not UNIX?
+
+o Test Sasami with a model which calls eager() in a tight loop - Ben had a
+  note about this in the original render.c source (should be OK as eager
+  forces a Tcl update, and togl will then call the r_render callback).  Tim
+  tested this -- there is a bug.
+
+o installeddi() should do a NOP the second time it is called.
+  Actually... unnecessary as it doesn't seem to do any harm?  Actually need
+  to fix notation() so that a second call will replace the info gathered
+  from the first (I suspect it actually ends up with multiple copies on the
+  list currently).
+
+o eden_allow_redefine_builtins -- a new variable to turn this option on so
+  that we could redefine writeln for example to get EDDI query results into
+  a string instead of stdout...
+
+o Notation change requires exact match -- good.  But it needs to ignore
+  white space at the end of the line ("\n%eddi    \n" fails).
+
+o Windoz: after accepting a file from File -> Open by pressing return, the
+  input window then appears to have focus but alt-a does not work
+
+o Split change.log file?  It's getting a bit long to view via the Help menu
+  now...
+
+o An 'sqleddi' command to start up tkeden with all Meurig's stuff?
+
+o Add SQLEDDI questions to Eden FAQ.  Eg stuff must be in upper case, lack
+  of # character...
+
+o SQLEDDI error messages... they should not come out on stdout, they should
+  show the context, they seem to be very confusing when you feed it
+  rubbish.
+
+o Notation radio buttons should be packed more sensibly if tkeden window is
+  small
+
+o A debugging mode which prints out the name of the currently executing
+  function and the line that it is in... kind of language level debugging,
+  as debug(1) is too low-level to be useful mostly.
+
+o Debugging is strange in Eden due to definitive machine: we want to know
+  /why/ something happened.  In procedural languages a stack trace will do
+  but definition update and triggered actions confuse this picture in a
+  definitive system.
+
+
+o Observation-oriented database optimisations on EDDI relational algebra
+  (eg move selections inside joins)
+
+
+o EDDI: access Eden functions in 'is' views.  Perhaps like Donald '!'?.  Eg
+  MARKSPERCENT is mul!((MARKS % q1), div!(100,8))
+
+o tkeden quits when this redefinition is made:
+(load this file)
+%eden
+_tkeden_showxoutput = 1;
+
+%scout
+image source = ImageFile("png", "/dcs/emp/ashley/EMProjects/Scans/10c1.png");
+window firstImage = {
+  type: IMAGE
+  box: [{10,10}, {490,240}]
+  pict: "source"
+  border: 5
+  relief: "raise"
+};
+screen = <firstImage>;
+(give this input)
+%scout
+image source = ImageFile("png", "/dcs/emp/ashley/EMProjects/Scans/11c1.png");
+window firstImage = {
+  type: IMAGE
+  box: [{10,10}, {490,240}]
+  pict: "source"
+  border: 5
+  relief: "raise"
+};
+screen = <firstImage>;
+
+
+o Create a Tk console window if required, using Tk_CreateConsoleWindow
+  as per Tcl_AppInit in tkMacOSXAppInit.c?  (Will this improve the
+  console facilities on Windows?)
+
+o Document cost of the various list operations:
+init ([sdf, sdfsd, dsaf])          ll handle (from count?!)
+listsize (l#): O(1)                ll oracle
+sel (retrieve / set l[n]): O(1)    ll oracle
+shift: O(n)                        ll oracle handle (ll--)
+append: O(1)                       ll oracle handle (ll++)
+insert: O(no items after insertion point)  ll oracle handle (ll++)
+delete: O(no items after deletion point)   ll oracle handle (ll--)
+concat: ??  eg lr is l1 // l2              ll1 oracle ll2 oracle llr handle (ll1+ll2)
+
+o Abhir would like a "repeat last command" key shortcut (ie previous,
+  accept).
+
+o Need to correct the Eden manual:  eval() isn't a real function:
+a=1;
+proc p { writeln(eval(a)); }
+p(); /* prints 1 */
+a=4;
+p(); /* prints 1 -- whoops */
+
+eval() doesn't exist in ttyeden-jun201996 (which you need to run on gem).
+Or tkeden-sep261997
+Or tkeden-dec151997
+Or tkeden.S-dec151997
+But it does, with this problem, in dtkeden-sep31999
+
+o It isn't possible to write an assert function in Eden.  eval
+requires an unquoted expression as input (so the exact expression
+cannot be passed in as a parameter) and it evals at parse time, not
+when the containing procedure is called.  execute cannot be used as it
+returns the error status from parsing + invoking the string, not the
+value of the result.  Duh!
+
+o ttyeden-jun201996 says "Killed" when run directly on cottage.  The wrapper
+shell script conceals this error.
+
+
+o On Mac OS X:
+
+TK/TCL PROBLEMS
+- Down scroll buttons not visible
+- Dragging windows requires click to make active first
+- Maximise button doesn't work
+
+COSMETIC
+- Change View menu to Window?
+- Accept button background should be grey, not white (a Tk problem?)
+
+INTERFACE
+- Can't select text in Eden Definitions, or Scout definitions, or the
+  help windows.  Tried removing -state disabled.  Also tried inserting
+  -insertbackground blue.  Is this a focus issue perhaps?
+- Most key shortcuts don't seem to work.
+- Default buttons (eg Help -> About tkeden -> OK) should glow and respond to
+  press on Return.
+- Eden Definitions menu doesn't appear (Save, Find, Rebuild, Update, Close)
+  - ... reimplement Eden Definitions menu as a bunch of buttons?
+- Apple-W (for close window) doesn't work anywhere
+- Implement a console window (tkConsole isn't quite right...)
+
+BUGS
+- File -> Open / Execute... cancel... NavGetReply failed, -128
+- Apple-Q, Apple-H don't do anything.  (Previously found that "Quit is
+  not registered in the commandTable hash (commandEntryPtr == NULL)").
+
+IMPROVEMENTS
+- Include Tcl/Tk frameworks within the application bundle, so the user
+  doesn't have to install them?
+  - Need to look up @executable_path in ProjectBuilder mail archives
+- Sasami!  Togl on Mac OS X... people seem to be moaning about 'main' being
+  null presently (April 2002)
+
+
+
+o Parser documentation
+
+o Help -> About EDDI
+
+o Refactor the libLocation guessing stuff for the various platforms.  Take
+  it all out of main.c!
+
+o change.log file accessible from the website somehow (link to
+  ~empublic/lib?)
+
+
+o emprojects in ~empublic/bin to start up a projects database with
+  persistence.  (Need to fix commas bug first :<)
+
+o Improved Eden lists... then create a %eden2 notation which does this
+  transparently.
+
+o Figure how to rework existing models to cope with removal of _mouseClick
+  in 1.17 (railway accident messes up, for example)
+
+o Add an Eden log command, which specifies a file to start logging
+  stdout (and stderr?) to.  dup stdout, open it again (see man dup),
+  then read this every so often (after every RunSet?), and write this
+  to the log file.  Nope -- this doesn't work.  Perhaps you can't read
+  from stdout.
+  Another way might be to define my own fprintf function and link Eden
+  with this?
+  Or can we redefine stdout once the process has started?
+  Don't really understand the difference between fds and streams :(
+  I'm sure this has been done in other tools (shells, mysql, tee...)
+  Java System class seems to be able to reassign out, err etc
+
+Is this one fixed?
+o Saving multiple history files by moving them causes problems when logged
+  in on multiple machines as the same user and running tkeden on them all:
+  get "stale remote file handle" from flush $histFile in edenio.tcl
+
+
+o mv arca.lib arcalib.eden (once Arca translator is fixed)
+
+o query output should limit value display to one or two lines?
+
+o eden_backticks_dependency_hack: what does this do?  Perhaps make it a
+  standard part.
+
+o Input window should take note of the indentation level when return is
+  pressed and create the same number of tabs as the line above.
+
+o fopen("thing"); quits Eden: need fopen("thing", "r");
+
+o Link with regular expressions library and use that instead of CB's split
+  etc?
+
+o Expose eden_notice_undef_reference, _tkeden_showxoutput etc in a Scout
+  window as standard to give a more visibility to these settings and make
+  them easier to change.
+
+o EDDI join * operator appears to be right-associative.  Probably should be
+  left associative so that Q*A*P still works in sensible time even if A and
+  P are very large.  In fact, probably want most operators to be
+  left-associative: right-associative is more the special case, required
+  for function application, exponent etc.  The left-associativity probably
+  occurs due to splitting the string from the left.
+
+o Get a heap overflow error when doing a massive join in EDDI.  Seems to
+  come possibly from the 'return tlist;' in njoin()?  Does a return value
+  go via the heap?  Presumably we need to make all those things in njoin
+  auto variables... but that didn't seem to make much difference.
+
+o How about some confirmation from EDDI when making massive
+  joins... "about to start calculating 8000000 rows: OK?".  Should be able
+  to turn this prompt off too.
+
+o Some way of querying whether it is /possible/ to forget a symbol (without
+  actually forgetting it yet).  [Tim's idea]
+
+o sasamiexamplesCarter1999... load test.s, view eden definitions with all
+  translations on, then select just "initialisation"... nothing appears.
+  Select all or "system" works OK.
+
+o An Eden timer(proc, time) function.  This should set up an OS callback
+  for that amount of time delay.  The Eden process should block otherwise,
+  if it has an empty Runset.  Then could use this for examining the
+  filesystem on a regular basis without doing a busy loop.
+
+o Can we access a persistent EDDI database from a web server?  Eg to serve
+  the EMpress database.  Perhaps use a named pipe for textual communication
+  (not much good for multiple clients though).
+
+o Lots of stuff in the symbol table seems to cause View Eden Definitions to
+  mess up.  See 3doxo in ~croe/PhD/PRACTICAL/3doxo/Run.e
+
+o Benjohn wants an integrated system for writing small graphical programs.
+  Could we write a BASIC CB parser (BASIC syntax is good for beginners) and
+  provide some PLOT functions, and even access to OpenGL Sasami stuff?  It
+  should run in full screen mode (so the user obviously has control over
+  the entire machine and is not distracted).  The editor is also
+  critical... in BASIC, we can simply edit by rewriting lines: "30 PLOT
+  x,y" rewrites the current definition of line 10.  The user only has to
+  know that and the LIST command to create simple programs (cf Bonnie Nardi
+  novice spreadsheet users get by with using only a small number of
+  functions).  When the program gets large, they have to figure out how to
+  control the LIST output so that it doesn't scroll off the screen, but by
+  then they are more advanced as they've written a program larger than one
+  screen (and can learn about pausing output with a key modifier, or
+  parameters for the LIST command).  Strikes me that we are recreating a
+  similar kind of interface in tkeden.  How about a BASIC, but with
+  definitive features?
+
+o Setting attributes of Donald geometry by using an escape to Eden is a
+  total hack.  Eg need to say A_p_q, but Donald is already within p {} so
+  could be unnecessary within Donald.  Donald has a string type so can we
+  pull this within Donald?
+
+o Write a Donald reflection mechanism in Eden.  COG could use this to save
+  drawings created.  Replace execute("%donald\nline l1=... in COG with
+  saveAndExecuteDonald("line l1 =... and maintain a list in Eden which is
+  the Donald symbol table (ie l1 can be later redefined).  Then we can just
+  write that list out to disk to save the Donald.  For COG, we'd need to
+  distinguish between "system" and "user" geometry, not saving "system"
+  stuff (eg the red selector dots).  Having done this, we could work on an
+  agent-oriented parser using these Eden primitives we have constructed,
+  and build a %donald2 notation, working out the inconsistencies with other
+  notations as we go.
+
+o Rewrite the Quick Reference Guides in Scout
+
+o COMMIT / ROLLBACK... saving symbol table state to disk on COMMIT, and
+  reverting to that on ROLLBACK.  ?
+
+o Get pow to return an int if both arguments are ints.  This requires
+  changing it from a simple c-library mapping to a C function.
+
+o bounceCarter1999: a Sasami bug -- when the sasami viewport, open_display
+  etc code is at the start of bounce.s, the Sasami viewport does not open.
+
+o Add stuff for Allan's Dependency Modelling Tool:
+  - Storage of info list within symbols.  Worried about memory allocation:
+  but perhaps just freedatum in forget().
+  - Func / procs to manipulate list
+  - Make it a list of lists, each index being a defined user: dmt being 1.
+  - Figure out how to remote control a dtkeden server using a socket
+  - resetSymbolIterator, getNextSymbol functions to access symboltable()
+  data one at a time
+
+o Consider putting information about rgb2colour in Scout and Donald Quick
+  Reference Guides.
+
+o Optional warning to say when redefining an observable that already
+  exists.  eden_notice_redefine?
+
+o Actions are not evaluated when one or more of their triggers is undefined
+  (or is it non-existent?).  This caused me a problem with writing a
+  triggered procedure to mediate the donald better list symbol table to the
+  outside; it may be the thing that stops the Scout screen updating when
+  something is @; Chris has found it a problem with some mouse click
+  problem.  This is probably the rule that things can't be evaluated if
+  their inputs are not up to date?
+
+o Does query ? operator create an undefined variable when asked about
+  something that does not exist?  The output needs changing to show that
+  the variable does not exist (as well as being undefined?).
+
+o ?variable in Scout shows nothing at all if the variable is undefined:
+  perhaps it should return @ or something.
+
+o in the presentation notations we need to remove the max() and min()
+  function definitions..  just in case they are used in the model, they are
+  now as standard in tkeden1.41.
+
+o Scout: ash.type = DONALD, to allow incremental redefinition of windows.
+  window ash { type: DONALD } doesn't work (other values return to their
+  defaults).
+
+o CB's "number" template number=["read_all", [["0", "9"]]]; accepts the
+  empty string.
+
+o Wrap Sasami in a Scout window (for Chris R).
+
+o Full PCRE documentation (in a Help menu?).
+
+o Rewrite CB's split function using regular expressions (hopefully
+  performance would improve).
+
+o Replace Eden 'macro' function with one using a RE?  (Measure
+  performance difference).
+
+o Rethink regmatch output: multiple matches as well as subpatterns?
+  (Then probably need a limit parameter).
+
+o p=&w;
+  p(); -- segmentation fault
+
+o Make append, insert work on strings
+
+o TKEDEN_LIB env variable to EDEN_LIB (accessible from ttyeden also)
+
+o proc p { writeln("$1", $1); }; p("hi"); fails with
+    index out of range (11 is outside the range 1...1) in p 
+  proc p { writeln($1); }; p("hi"); is OK... ???!!
+
+o Help->License should show GPL
+
+o notations TODO:
+   - denota translator: stop #s on stderr
+
+   - redo Donald or Scout in Eden?
+
+   - add %scout0, %lsd0, %eden0 etc as well as %donald0
+
+   - IP translator synchronisation to avoid the one second delays
+
+
+o edensl:
+  - need to escape quotes within quoted parameters
+
+  - problem with procs: edensl chunks statements, but execute needs
+    whole procs at a time.
+
+  - need to add underscores between symbol names and indices and also cope
+    with multiple levels of lists... eg need l_1_2, not l12.
+
+  - auto (within proc) lists?
+
+
+o Can %edensl fully replace the built-in %eden?  Probably need to make sure
+  that execute, include etc all do a "%eden\n" before they run to make sure
+  this fully works.
+
+o Generate machine code, not VM instructions to avoid the overhead of calls
+  to function pointers.
+
+o Fix AOP translator to use one buffer per notation, so that AOP
+  translators can use other AOP translators.
+
+o A restart menu option... or some way of clearing all state... (cf BASIC
+  "NEW").
+
+o Do we need the whole of the pcre directory, or can we just take a
+  few choice files and put them in Eden/ ?
+
+o remove cvs trans.c
+
+o WMB would rather tkeden_vbfeatures be implemented as a Scout sensitive:
+  value (?)
+
+
+o Pointers used in procs become invalid after forget:
+    proc p { forget(&a); }
+    p();
+    p(); /* segmentation fault */
+
+  (the problem does not occur in "global", non-proc contexts, as the parser
+  will create a when &a is used if it does not already exist.  This does
+  not happen during a proc however, as the proc is not reparsed for
+  execution).
+
+o arca on PC...
+
+o PCRE documentation.
+
+
+o Scout/parser.y: ALIGN ':' int_exp, not JUST, as per SENSITIVE, to allow
+  DFalign.  Similarly TYPE?
+(important for Chris)
+
+o ~wmb/public/projects/tools/translators/def2proc/EXAMPLES/guess.proc
+  doesn't work in recent ttyeden, but works OK in ttyeden-1.6.
+
+o 1|> g is f(2);
+  2|> f=2;
+  crash?!
+
+o cruise controller falls over when nSegment is changed on Windows (and
+  Mac?) but not Solaris.
+
+
+
+o SQLEDDI bugs:
+
+  1) joins cause "njoin has received at least one undefined table": garbage
+     collector not working properly?
+  ... fixed, but fudged: todo's seem to need % at end... should fix the
+  underlying cause really...
+
+  2) collating together several lines of SQL seems to cause odd errors.
+     Doing the lines individually is OK.
+  ... another awful todo() problem.  A number of possible solutions but
+  none of them are easy.
+
+
+
+o func f {}; f=2; gives error: f is func, not a read/write variable.  This
+  causes a problem with the new spreadsheet funcs, if someone uses the
+  observable name 'ceiling' for example (room3dsasamiCarter1999).  The only
+  restriction (which we should change to a warning) is when assigning to a
+  func/proc/procmacro.  Overwriting one of those with an is is OK, and the
+  reverse is OK.
+
+o Plug-in architecture.  Have a special directory within lib-tkeden within
+  which users can drop folders containing Eden.  Eg for the Arca
+  translator.  When Eden starts up, it searches this directory for
+  specially-named startup files and executes them.  This is fairly
+  easy... but ideally users would download such things from the
+  repository... and how should we cope with platform-specific code there?
+  Eg the Arca translator needs to be compiled for a specific platform.
+  Have previously avoided putting platform-specific stuff into the
+  repository, but perhaps we should allow this as long as they are named in
+  a standard form, eg arcaWard2002/arcaWard2002-solaris-sparc?  Then the
+  repository can spot these standard names and present a download facility
+  for that subdirectory.  Or perhaps users just download the lot, then put
+  the plugin for their platform into the directory?
+
+o TEXTBOX getText adds a newline to the input.  It also gives @ until
+  something is entered (is / should this be different from a blank
+  string?).
+
+o Resize the screen window when a new scout window is added if necessary
+  (Liane's suggestion).
+
+o Remove extra newlines read from TEXTBOXes.
+
+o Add tkeden identity (filename + variant + version number?) to
+  .tkeden-history
+
+
+
+o Bug reported by Antony Harfield: Chris' logo parser gives Sig 11 on
+  Windows... details in email 28 Oct
+
+o Bug reported by JP re Scout?
+
+o Liane and WMB bug: 1.46 (and 1.27) don't detect missing bracket after
+  declaration of procedure.  (1.6 did).
+
+o todo() bug present in Arca as well?  See email from WMB to James Butcher
+  14/11/2002.
+
+o Liane/WMB eddi input? fdl4Beynon2002 (see mails Nov 10)
+
+o Look at Henry Southgate's Donald attributes problem
+
+o Look at Alison's TEXTBOXES problem
+
+
+
+o Work more on Mac port?  (Eg Patrick Sockett)
+
+o Load Scout windows into Sasami imagemaps?  (This thought originated when
+  looking at Apple's new presentation package, which uses a 3d "cube"
+  transition between slides).
+
+o Define ImageHeight etc to Scout?  (See email to James Butcher 14/1/2003)
+
+o Make the fact that the Find dialog takes regular expressions (see
+  examples in change.log for 1.17) more obvious, otherwise might cause
+  problems: searching for 'b+c' doesn't do what is expected...
+  (see email from Chris Roe 20 Feb 2003).
+
+o Second point used in the frame in a textbox isn't actually a point
+  variable.  Correct to use some other kind of spec?  (Mentioned by Ant
+  Harfield 23/2/2003 email).
+
+o Many people are getting "program too big" and that other message from the
+  lexer... increase limits?
+
+o a="\\\"$;{}[]abc";
+  writeln(regreplace("\$", "b", a));
+  Command terminated by signal 11
+
+o "  %scout" fails: ignore leading spaces for notation transitions?
+  (Causes problems when pasting in code, for example).
+
+o Objects within objects in Sasami, like Donald openshape (Benjohn's
+  suggestion)
+
+o Adaptive clock rate in Jonathan's parking model.  If we've missed several
+  deadlines in a row, then halve the clock rate.
+
+o Clean up new Sasami work: do frustum properly, document properly...
+
+o Finish fix of long list parsing for KC (I did some experimentation on
+  this at version 1.49, but only managed to transform the problem into
+  another dimension).
+
+o Pixel access to the screen (use some game screen drawing API?)
+
+o Do some run time analysis of Sasami: does sa_r_render_object_polys
+  really call the various find routines a lot, and does this take a
+  lot of time when we have many objects/polys?  (KC's 'creature'
+  model).  If this is the case, replace Sasami's linked list+search
+  dynamically sized arrays approach with actual static sized,
+  immediate access arrays initially, and then dynamically sized,
+  immediate access arrays.
+
+o Fix Alison's bug.  Apparently
+    %donald
+    ?_sjdf0 = "col...r fill=solid"  (note the space)
+    %eddi
+    ?teacher;
+    %eden
+    ?teacher;
+    var106 = ( ... " // str " )
+    var1
+  messes up...?
+
+o Merge in Antony Harfield's latest AOP
+
+o Access to a strstr-like function for JP
+
+o Is eden_backticksblahblah mentioned properly in eden.txt?
+
+o Wrap eddi errors and output in calls to writeln_eddierror etc and by
+  default define 'writeln_eddierror is writeln'.  Also sqlte output.
+
+o Apologise on error signal handler!
+
+o Incorporate Antony Harfield's new AOP and EDDI.
+  http://www.harfield.org.uk/project/download/ or
+  agentparserHarfield2003/aop_v204
+  Does it fix parsing of negative numbers?  Eg apple << ["ne", 0.20, -3];
+  (causes segv on Windows July 2003)
+  WMB tested with Asma 24/10/2003, gives "AOP parse error" or such like on
+  Solaris...
+
+o A Quick Reference (help menu) guide to EDDI... can base this on S V
+  Truong's report.
+
+o Error handling: make it possible to customise this.  Simplest: have
+  a way of disabling errors and a way of executing a statement and
+  tell if there was an error.  Then we could for example use the
+  cyclic dependency checker under programmatic control.
+
+o Show when executing RunSet by changing colour of Interrupt button (from
+  disabled grey to active red?).
+
+o Mac OS X: when executing RunSet, "ping" the activity manager (?) to prevent
+  the Mac from sleeping whilst tkeden is busy.  (See Salling Clicker for
+  mention of this "ping"-ing.
+
+o ttyeden gendigraphs2.eden > outfile doesn't give an error when disk
+  holding outfile fills up.  Is this ttyeden or the shell's fault?
+
+o How to add a scroll bar to Scout screen?  Automatically if required?
+  Eg AOP.
+
+o Add Applescript for Mac OS X tkeden?  As another notation?
+
+o IP translator synchronisation problem: if can guarantee that translator
+  processes pass through % (notation change) lines unchanged, then could
+  pass %input001 into translator and see when it comes out...
+
+WMB mentioned:
+
+  James Butcher mentioned to me today that he's interested in putting his
+  jigsaw model in the repository ... apparently it works with an updated
+  release of tkeden (-1.47) which he has a personal copy of.
+
+  As far as updates for the next release of tkeden are concerned, I'd
+  appreciate some way to overcome the problems introduced by Chris's math
+  functions, which have such commonplace names that they conflict with
+  several existing models (we discussed this before). Would having a special
+  math lib that gets loaded via a special command line option, or can be
+  omitted on startup in some other way, be a way forward? No doubt we
+  discussed this before!
+
+o Chris has been running into the 4K MAXTEXTLEN limit in Eden/lex.c
+  when constructing the database text, where he has code of the form
+
+  foo is "
+  verrrrry long string
+  ";
+
+  Can we make the yytext buffer dynamic?
+
+o The tkeden Donald translator generates an error when given a
+  real-typed first argument... but the underlying Eden code that it is
+  translated to uses %, which has no problem with this case.  (engine demo)
+
+o Similarly, Donald translator generates an error when given something of
+  the form
+    int = int * real
+
+o Document 'make pcre'...
+
+o Build a statically-linked tkeden for Linux
+
+o Is propagateType (a dtkeden Eden variable) documented?  Apparently
+  Chris Keen wrote about it in his project writeup...
+
+o Compile and install Tk Img package for linux-intel at DCS
+
+o Can we do away with the "input buffer overflow" MAXTEXTLEN
+  limitation, which is a problem when people generate code automatically.
+    bash...
+ gem$ echo "a=\"`printf "%4094c" " "`\";writeln(a#);" | ~empublic/bin/ttyeden 2>&1 | head
+ 1|> 4094
+ 2|>
+
+ gem$ echo "a=\"`printf "%4095c" " "`\";writeln(a#);" | ~empublic/bin/ttyeden 2>&1 | head
+ ^
+ /dcs/emp/empublic/solaris-sparc/bin/ttyeden-1.46: error: input buffer overflow while executing file stdin near line 1, char 0:
+
+o syntax highlighting in the input window?
+
+o To solve the stack and heap size problems: add command line
+  parameters for them (with default options being as they are) and
+  allocate them once at program start time.  ... found this suggestion
+  in an old Eden man page (by Edward?).
+
+o Document the maximum length of an Eden identifier somewhere (is it 256?).
+
+o Add uname output to DCS eden.log file to record host type
+
+o Make readline code in ttyeden a command line option -- it seems to
+  interfere with texteditorYung1987 for example.
+
+o Obtain code for tk/tty-eden version 1.0 or just before and compile
+  up if possible to give a reference point.
+
+o "Command terminated by signal x" messages appear in DCS eden.log
+  file but not on the user's terminal... ... perhaps get the Eden
+  wrapper script to hang around until the Eden process terminates?
+
+o forget should be able to take an ordered list of arguments of things
+  to be forgotten.
+
+o CYCLIC DEF : ABORTED error message is a bit strong: /what/ has been
+  aborted?  Just the current statement?
+
+o Wacky and probably not for tkeden: change to representing symbol identity
+  using an inode filesystem style scheme.  Different agents can know the
+  same symbol by different names (cf hard linking).  The symbol name could
+  be changed without grepping through definitions (this requires that we
+  don't represent script as strings a la execute).  Actually this doesn't
+  quite work: perhaps we need something a bit like the Mac HFS filesystem
+  where file identities are known both as a unique identifier and a textual
+  name.  The problem I'm trying to solve is: be able to extend
+  texteditorYung1987 by changing the cursor position ('col' and 'line' --
+  let's think about just 'col') to a definition something like
+    col is insert_mode ? 1 : assignTo_col
+
+  The actual detail here is not the point but the idea that col (previously
+  an integer which is assigned to) could be changed into a definition to
+  extend the model definitively but that the code that assigns to it could
+  be kept and used.
+
+o Need a way of getting x-y items from a list easily.  a is b[1:2]?
+
+o symboldetail "type" is a high-level notion of "type": it returns only
+  "var" and not "string" etc.
+
+o There isn't any way to get a list of all the ~> dependency-links
+  programatically out from the symbol table in the same way that
+  symboltable() can be used for procs, vars etc.  The "triggered action"
+  form of representation "proc name : trigger" is not sufficient as
+  built-ins etc can be triggered by change using ~> and built-ins cannot be
+  defined with the triggered action representation.
+
+o Write some Eden procedures to save the symbol table state -- rewrite the
+  tkeden Save As facilities using Eden...
+
+o Acknowledge Kernighan and Pike The UNIX programming environment in
+  credits.txt.
+
+o execute() apparently returns 0 if it failed... perhaps there should be an
+  _eden_show_execute_errors option?
+
+o Is there a fatal error function in Eden?  Perhaps we should call abort()
+  in order to dump core if we are able to detect this circumstance.
+
+o Make default Open dialog bigger
+
+o Document Eden sasami_ functions (see Eden/builtin.c and
+  Sasami/functions.c) in sasami.txt.
+
+o View Eden definitions -> "with translated Sasami definitions" doesn't
+  appear to completely work.  For example, debug(8);, then load
+  sasamiexamplesCarter..../morph.s, note the creation of
+  _sasami_vertex_5_x, but then look in the Eden interface and can't find
+  it.
+
+o Make version number a sum of something defined in EDEN/Tcl and something
+  defined in the C code?  That way can release something with changed
+  library code but still the same binary...?  Should work as long as both
+  numbers are only ever incremented.
+
+o tkeden on dual monitors starts every window in the middle, spanning both
+  monitors :(
+
+o Put a warning into Eden when int/int truncates the result.  Make the
+  warning optional so people can turn it off if they intend truncation.
+
+o In fact: put a configurable warning into Eden when any type changes.
+
+o Have a slider to control speed of action execution?  ... actually to slow
+  down when want to see what is happening.
+
+o Does sqrt etc require a float?  Does this happen automatically now?
+
+o Antony Harfield's fixes for displaying \"$;[]{} in Scout and Donald (bug
+  due to Tcl interpreter) mentioned on p.50 of his report.
+  ... agentparserHarfield2003/builder/special_chars_fix.e ?
+
+o Notation switches to an unknown notation (eg %eddi before installeddi())
+  should be an error.
+
+o untitled.all should be all.script
+
+o Update information about how/where to report bugs (no-one's ever used the
+  SF bug reporter).
+
+o writeln(symboltable()) fails with heap overflow in some models
+  (apparently NEWTT, says Karl).  This stops Karl's undo working... can we
+  fix this?
+
+o project idea: DMT in Eden/Scout
+
+o When we get a seg fault... can we try and recover?  or at least save the
+  (re)definitions in the form id is blah; context / type is denoted by
+  syntax used.  Donald uses [] for lines, Eden for lists.  So possibly need
+  more characters... math symbols?
+
+o Should be possible to save a presentation after having created it.
+  sc(para) isn't an obvious creation though... need id is para.  Then have
+  a way of modifying just parts of what was previously instantiated instead
+  of having to redefine all elements.
+
+o Duh!  Can save the 1 sec delays in IPTrans by separating writes and reads
+  to/from translators.  Writes (calls into the relevant parse char by the
+  notations framework) write out the single char to the external
+  translator.  Reads need to operate all the time, polling the translator
+  for output and error.  If there is something there, then call execute() /
+  error() as appropriate.
+
+o It should be possible to fill a variable with the names of the files in
+  the current directory.  But system() just returns the exit code?  Perhaps
+  add a function that returns files as a list.
+
+o tkeden-1.53 on Linux PC in 3.16 (equuleus) gives libpng error -- is this
+  due to need for the install on this machine to be sync'd with the rest?
+
+o Hmmm.  Are Ant/Chris' parser configuration files themselves a notation
+  that could be improved with the AOP?
+
+o Put the ability to take a screen shot into tkeden to save people having
+  to figure out how to do this in some other way.
+
+o Consider using BEEP protocol (beepcore.org) for a dtkeden re-think?
+
+o Karl mentioned a bug where tkeden can be crashed in 3 lines of Scout.
+
+o donald.eden contains a 'parallel' func, but it is undocumented.  How many
+  other undocumented Donald functions are there?
+
+o An AOP notation for HODs?
+
+o For Karl's drawScout...
+  - symboldefinition of triggered procedures omits trigger
+  - problem with redefining images in IMAGE windows (see imageCrash.hist
+      file emailed 22 Nov 2004)... actually this is a bug related to
+      calling ImageFile twice?, since defining the filename as a Scout
+      string and then redefining that works...
+  - can you forget scout windows?
+  - key presses in TEXTBOX windows redefines a _TEXT_1 variable and also
+    affects future calls to the appropriate get() function.  However,
+    pasting text into a TEXTBOX window doesn't do either of these.
+  - the variable (and get() result) representing the contents of a TEXTBOX
+    window would in Karl's opinion be better initialised as "" rather than
+    @.  (but would this break old models?)
+  - an Eden scoutsymboldefinition function, giving the result of the Scout
+    ? operator.
+  - sensitive: ON + MOTION doesn't appear correctly in the Scout ? output.
+
+- AOP builder looks good in 1.46 but not in 1.53... has something to do
+  with relief changed in 1.53?  Charlie says that actually control over
+  relief has been lost.
+
+- tkeden-1.10 failed to start on Linux in James Nash's (csvpg@dcs)
+  environment, and COG behaved strangely
+
+- Link DMT and EDEN?
+
+- debugging xoutput off in tkeden-1.53?
+
+- 1.53 appears to be missing the debug() function... ?!
+
+- delay on SEGV on UNIX as well as Windows?  ([some?] AOP bugs result in
+  errors that display in the error window but are then followed quickly by
+  a SEGV which removes all windows).
+
+- a .tkeden-errors file for use after SEGV?  (Since -history file doesn't
+  contain the full error information any more).
+
+- EDDI crash bugs reported by Jeremy Stein email 22 Nov 2004
+
+- "too many nested calls to Tcl_EvalObj" bug reported by Jeremy Stein 1 Nov
+  2004
+
+- running installarca(); on Linux gives
+    1|> installarca();
+    ipopen(): ioctl couldn't push ptem module: Invalid argument
+  probably because /dcs/emp/empublic/bin/arca.trans on Linux gives
+    /dcs/emp/empublic/bin/arca.trans: can't find an up to date stable
+    version of arca.trans for linux-i686, sorry
+  ... email from George 26 Nov 2004
+
+- seems to be some bug on Linux where errors (possibly just EDDI errors?)
+  cause a SEGV and the error window disappears too fast to be seen.
+  Reproducing the bug on Solaris is the same, but without a SEGV.  Linux
+  gives an error about free() -- perhaps the Solaris memory allocation is
+  tolerant of some bug here.  Found this error with Charlie, and reproduced
+  on the Linux machine in his office and topaz.
+
+- "proc E : e { e++; } e=1;" crashes with heap overflow
+
+- a "here-document" syntax for Eden.  Something like
+     t=<<EOF;
+     writeln("hello world");
+     EOF
+  instead of
+     t="writeln(\"hello world\");
+  ... this should make writing macros a bit easier.
+
+- if it is too tricky to implement multiple independent Sasami displays (in
+  Scout?), then how about multiple Sasami displays that all show the same
+  world but with independent cameras?
+
+- dtkeden: agent login on command line
+
+- dtkeden: ability to change logged-in agent after login
+
+- dtkeden: make communications mode programmatically accessible
+
+- programmatic support for opening and closing windows, rather than the
+  currently recommended tcl hack.  ... for Charlie and Karl.  Perhaps an
+  Eden variable screen_open ...?
+
+- a better application icon for Mac OS X and other platforms... there are
+  some royalty-free ones at http://interfacelift.com/icons-stock/...
+
+- improve Scout documentation to address James Nash's questions answered by
+  WMB, Ant etc in CS405 Forum on 22 Dec 04.
+
+- fgetc seems to return -1 on EOF.  This needs checking and documenting
+  (and other similar cases) in eden.txt.
+
+- seems we have a problem with the Linux binaries, since Jeremy got a large
+  speedup by compiling it himself (see emprojects forum 8 Jan 2005).  Need
+  to look more at how we should build and distribute this.
+
+- PCRE -- perhaps assume a library available on people's systems now.
+  Remove from distribution and write a configure check for it instead.
+
+- when we've built a new version of tkeden, send it to Jeremy to check for
+  hard disk thrashing when moving mouse over motion-sensitive Scout window
+  issue (see emprojects forum 8 Jan 2005).
+
+- include my benchmark Eden code with the distribution (in Tests?) so
+  people can check for speed.
+
+- it looks like doing an execute("%eddi\n...") changes the notation context
+  in the interface -- so it seems difficult to use Eden whilst such an
+  execute is running in a loop in the background...
+
+- %edenprof -- which inserts extra lines of Eden code which capture timings
+  for later analysis of EDEN performance on the given code.
+
+- add username of building user to built executable somehow, so that it
+  appears in the Help->About tkeden menu.
+
+- Allow anonymous functions as per Charlie's request Jan 17 2005.  Eg (very
+  roughly):
+    a is func { while ($1++) f=f*2; return f; }
+
+- Implement dependency within local (auto) variables.  Charlie's example:
+  be able to iterate through a string using two index pointers with a fixed
+  distance between the indices -- form the value of the second index
+  pointer from the value of the first by dependency.
+
+- Add DoNaLD 'delete' command to documentation.  Are there any more
+  keywords in the lexer (and in Scout etc) that need adding to the docs?
+
+- Interactive help on aspects of tkeden: eg Dan's DoNaLD "arc" model
+  demonstrated 20-Jan-2005.
+
+- Take %edensl out of the release -- this should be a separate project.
+
+
+
+START From my "edenpending" mail folder, mails 17/05/2001 - 23/02/2003
+
+- " %eden" (etc) with a leading space fails.  Makes it awkward to paste
+  things in sometimes.
+
+- Ant mailed two problematic test cases on 28 October 2002.
+
+- "proc" inside a proc doesn't seem to cause an error, meaning that missing
+  brackets can cause much confusion.  WMB mailed a test case on 4 November
+  2002.
+
+- window_mousePos_x is in local coordinates?  Would be helpful to have
+  global coordinates to allow implementation of icon drags by dependency etc.
+
+- Lattice model problems discovered by Liane, ref WMB's mails 10 Nov 2002.
+
+- Using DoNaLD rot on a rectangle rotates the two corners, keeping them the
+  same distance from the central point, as opposed to actually rotating
+  rectangle -- according to Jon McHale 17 Nov 2002.
+
+- Some problem to do with TEXTBOXES: Alison Cronick mailed 2 Dec 2002.
+  Problem description might be contained in the model she mailed?
+
+- Henry Southgate reported problems with attributes of DoNaLD shapes
+  when reused in an openshape?  See WMB mails 11 Dec 2002.
+
+- Ant Harfield gave an improved scout_textbox_set_string in mail which
+  I replied to on 27 February 2003.
+
+END From my "edenpending" mail folder, mails 17/05/2001 - 23/02/2003
+
+
+
+- A point from Charlie about symboldetail... for var type, the
+  third element of the output would ideally contain the current value,
+  rather than empty string. Also we could consider changing "var" to "="
+  and "formula" to "is" -- then the list can be read by a human more
+  easily :)
+
+- Rename all built-in functions to _eden_builtin_foo and then add Eden
+  wrappers... allows people to change built-ins later.  Hmm -- what about
+  the case of two people independently customising a builtin?
+
+- EDEN icon: eg similar to Core Image / Audio / Video icons at
+  http://arstechnica.com/reviews/os/macosx-10.4.ars/16  ?
+
+- Can't do File->Open successfully to a file within a directory with a
+  space in the name.  Looks to be because the Tk file browser command in
+  edenio.tcl is giving a space-separated (?) list of files.
+
+- installeddi should do nothing the second time it is invoked
+
+- Get sysadmin to put symlinks to tkeden in the PATH?  This doesn't provide
+  the ability to reference all the older versions of tkeden though...
+
+- In main() in main.c, we are relying on the cwd to set the TCL_LIBRARY
+  env var on Windows, even if the -l argument is given.  Eric was using
+  the VEL on his Windows laptop and this was a problem.  Perhaps we should
+  set TCL_LIBRARY from -l if it was given on WIndows.
+
+- Use Rendezvous (now Bonjour) to discover dtkeden servers on the subnet?
+  http://wiki.tcl.tk/13722
+
+- Seems dtkeden has no checking on the -c argument: "-c scenedit.e" is
+  happily accepted!
+  
+- Tab completion on variable names in the Input Window
+
+- Rename _tkeden_showxoutput to tkeden_show_xoutput (for consistency
+  with other similar variables) and put triggered procedure in to print a
+  notice if someone redefines the original name.
+
+- DoNaLD Quick Reference needs some examples.
+
+- The FAQ documentation about accessing DoNaLD, SCOUT (etc) namespaces from
+  Eden and vice-versa should be in the Eden Quick Reference.
+
+- Is the tool consistent with my (relatively recent) usage of Eden/EDEN?
+
+- A command line option for tkeden which prevents loading of edenio.tcl:
+  no default UI, useful for presenting applications, and also useful for
+  tkeden-as-server applications.
+
+- Quick References should just be "Sasami Help" etc
+
+- Remove Win32 port version number.
+
+- Refactor version number headers: they should be EDEN_, not TKEDEN_,
+  since they are present in ttyeden also, although the Tcl variables
+  should stay as _tkeden...
+
+- Make a file (svn directory?) with reproducable problems for people to kill
+  off one by one
+
+- For all occurrances of p1 (and p0) in eddi.eden, rename to EDDIp1 etc
+  to avoid overwriting people's DoNaLD constructions where they frequently
+  use p0/p1.
+
+- Can we display musical flat/sharp glyphs in text somehow?
+
+- IPT 1 second pause problem.  The solution might also involve one of the
+  other problems here.  Perhaps define that ##* is an automatically generated
+  comment.  Follow by some unique identifier.  Then use those comments to
+  denote end of input given to a translator.  Translators must pass such
+  comments through unmodified, so that Eden can tell when they have finished
+  their (asynchronous) work.  Also use auto-generated comments to indicate
+  the input as originally given by the user, in some definitive notation.
+  Then require the translators to output that comment, followed by the
+  relevant Eden output.  This allows us to match up original input to
+  translated lower level version.  The original input can then be stored by
+  Eden for use in View Definitions (which would then operate on any notation)
+  and we could show corresponding Eden definitions for each original input
+  with a disclosure triangle.  Still need to think this out fully though:
+  what if a translator (say %donald2) generates output for another
+  translator (say %donald)?
+
+- The Apple Shark tool on planimeterCare2005 shows that the call stack grows
+  ever larger whilst we move the mouse over the input table (the planimeter
+  in the Sasami window following).  Appears to be a problem with checkRunStack
+  combined with sensitive:MOTION.
+
+- On the Mac, can only run one copy of tkeden at once.  This will prevent
+  us running multiple copies of dtkeden, say.  Ah -- we can run multiple
+  copies from the command line.
+
+- Document undocumented commands in Sasami.  "dump_vertices" command is one.
+
+- Might need some of the Windows cwd hacks on Mac OS too... running
+  tkeden dir1/dir2/Run.e on the command line results in Run.e not being
+  able to find files in dir2.
+
+- After having loaded EDEN, include anything (well -- not quite everything:
+  need to think about this) in the user's ~/.tkeden-extensions directory.  Eg
+  for extending EDEN with drawSCOUT etc.
+
+- Russell and Charlie's patch for sensitive:MOTION + history file performance
+  problem (caused by syncing to disk) on Windows.
+
+- Make it possible to drag text files into the Input Window.
+
+- A "%eden:writeln("hi");" syntax for a one line statement in a particular
+  notation.
+
+- In the Input Window, if we have not yet used the history Next/Previous
+  commands, choosing Next (or Previous, then Next) should not blank the
+  input.
+
+- A %tcl notation to save having to communicate with Tcl using Eden
+  tcl() procedure.  Implement this notation using the notations framework:
+  should be fairly easy!
+
+- "Here document" strings without need for escaping in Eden.  Use some
+  currently invalid character sequence in Eden to delimit a no-interpretation
+  string.  For example:
+    s = *"*Hello there "Mum!"*"*;
+  ... but *"* probably isn't a good choice (it might not actually be invalid,
+  for one thing).
+
+- Change URL mentioned in tool to use go.warwick/eden (or www.warwick/go/eden?)
+  instead.
+
+- Window sizes seem limited to the screen size available.  This can cause a
+  problem if eg a model is developed on a wide-screen laptop and then run on
+  a normal-size screen.  This might be a Tk or a OS limit.  (It is a problem
+  on both Windows and Mac OS).
+
+- ttyeden, tkeden, dtkeden should each build in a separate directory.  That
+  way, 'make clean' between each step would not be required (and minor changes
+  whilst building a release wouldn't require all three to be rebuilt from
+  scratch each time).
+
+- Consider changing EveryOneAllowed default value to FALSE.  It is presently
+  TRUE, which means LSD doesn't work as people expect.
+
+- Change EveryOneAllowed from a variable with procedural effect.  At the
+  moment, EveryOneAllowed affects the creation of future variables, until
+  EVA is changed again.  EVA should instead affect dtkeden's interpretation
+  of the empty list [] for oracle/handle, changing the interpretation between
+  no-one and EVERYONE.
+
+- Query on builtin should show file and line of the relevant source code.
+
+- View eden definitions dialog: `Update' button should be `Refresh'
+
+- Problems with if statements.  e.g.
+
+     if ( 2 > 1 ) {
+       writeln("Hello");
+     }
+
+  fails silently because EDEN is waiting for a semicolon after the braces to
+  complete the statement.  This not not occur in functions, or if there is an
+  "else" as part of the statement.  Decision that a missing semicolon is not
+  required after an 'if' (classifying it as a parser bug) and also that
+  the parser should produce an error in these situations and not fail silently.
+
+  (See eden-devel thread on 9th and 10th January 2006).
+

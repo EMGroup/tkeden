@@ -1,0 +1,47 @@
+
+ok = 1;
+proc assert {
+  para expr;
+
+  r = @;  /* r can't be auto as the execute won't work */
+  execute("r=("//expr//");");
+  if (r != 1) {
+    writeln("assert "//expr//" failed: "//str(r));
+    ok = 0;
+  }
+}
+
+a=1;
+assert("a==1");
+
+s="";
+s=s//"hi";
+assert("s==\"hi\"");
+
+s="hi";
+s=s//"there"//"mum";
+assert("s==\"hitheremum\"");
+
+c='a';
+d='b';
+d=d//c;
+assert("d==\"ba\"");
+
+c='a';
+d="b";
+d=d//c;
+assert("d==\"ba\"");
+
+c="a";
+d='b';
+d=d//c;
+assert("d==\"ba\"");
+
+
+
+if (ok)
+  writeln("SUCCESS");
+else
+  writeln("*** ONE OR MORE TESTS FAILED ***");
+
+exit();

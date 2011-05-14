@@ -1,0 +1,20 @@
+#!/bin/sh
+
+TKEDEN_SRC=`pwd`
+
+CFLAGS="-m32 -O0 -g -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5" ./configure \
+  --enable-debug \
+  --enable-depend \
+  --enable-disable-sasami \
+  --with-bison=$TKEDEN_SRC/../../bison-1.28/src/bison \
+  --with-curses-include=/usr/include \
+  --with-curses-lib=/usr/lib
+
+
+# this works and is necessary for Sasami, but there are other major
+# issues with the Sasami build at the moment...
+#  --with-png-include=-I/usr/X11/include \
+#  --with-png-lib="-L/usr/X11/lib -R/usr/X11/lib -lpng"
+
+# one of many failed attempts to get Togl to compile...
+#  --with-tk-include="-I/System/Library/Frameworks/Tk.framework/Versions/8.5/Headers/tk-private -ltk"

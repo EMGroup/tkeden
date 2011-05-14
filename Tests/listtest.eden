@@ -1,0 +1,83 @@
+
+ok = 1;
+proc assert {
+  para expr;
+
+  r = @;  /* r can't be auto as the execute won't work */
+  execute("r=("//expr//");");
+  if (r != 1) {
+    writeln("assert "//expr//" failed: "//str(r));
+    ok = 0;
+  }
+}
+
+a=1;
+assert("a==1");
+
+l=[];
+assert("l==[]");
+
+l=[1,2,3];
+assert("l==[1,2,3]");
+
+l=[1]//[2];
+assert("l==[1,2]");
+
+l=[];
+l=l//[1];
+assert("l==[1]");
+
+l=[1];
+l=l//[2];
+assert("l==[1,2]");
+
+notl=[1];
+l=notl//[2];
+assert("l==[1,2]");
+
+q=[1];
+l=[2];
+l=q//l;
+assert("l==[1,2]");
+
+l=[[1,2],[3]];
+assert("l==[[1,2],[3]]");
+
+l1=[1,2];
+l2=[3,4];
+l=l1//l2;
+assert("l==[1,2,3,4]");
+
+m=[2,4,6];
+l=[1];
+l=l//[m[2]];
+assert("l==[1,4]");
+
+l=[];
+l=l//[1]//[2];
+assert("l==[1,2]");
+
+l=[];
+l=l//[1]//[2]//[3];
+assert("l==[1,2,3]");
+
+l=[1];
+l=l//[2+3];
+assert("l==[1,5]");
+
+func f { return [5]; }
+l=[1];
+l=l//f();
+assert("l==[1,5]");
+
+l=[];
+l=l//[];
+assert("l==[]");
+
+
+if (ok)
+  writeln("SUCCESS");
+else
+  writeln("*** ONE OR MORE TESTS FAILED ***");
+
+exit();

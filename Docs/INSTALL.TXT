@@ -1,0 +1,229 @@
+-*-text-*-
+
+
+Note this document is augmented with the more recent documentation available
+at:
+  http://www2.warwick.ac.uk/fac/sci/dcs/research/em/software/eden/devel/
+(which is more up to date and specific).
+
+[Ashley, July 2005]
+
+
+
+REQUIREMENTS
+============
+
+Eden depends upon other pieces of software for some of its
+functionality.
+
+
+Build requirements
+------------------
+
+To be able to build Eden, you might need some of these open-source
+packages.  The version numbers are for your rough guidance only: these
+versions seemed to work for me, and earlier versions may as well.
+
+ncurses 4.2: if you want ttyeden to be able to move the cursor around
+  the screen etc - say you want to run the text editor model.  If the
+  configure script can't find a version of curses ("new" curses -
+  ncurses - is preferred but most systems will probably have a
+  suitable version already), then ttyeden /should/ still build (ie it
+  might not but that is a bug!).
+
+readline 4.1: if you want line editing facilities in ttyeden.  If it can't,
+  it /should/ still build.
+
+gzip 1.3: to decompress the package in the first place.
+
+make 3.78.1: but your system probably has a make already, which will
+  probably do (although you may need GNU make if you plan to do some
+  development with Eden - see below).
+
+tk 8.2.1 and tcl 8.2.1: if you want tkeden.
+
+Tk Img package 1.2.4 (from http://members1.chello.nl/~j.nijtmans/img.html):
+  if you want Scout to be able to display images from files formats other
+  than just the Tk default PPM/PGM and GIF.
+
+libpng 1.0.12 (which itself requires zlib 1.1.3): if you want the Sasami
+  OpenGL notation.
+
+Mesa 3.4.2: if you want Sasami OpenGL to use the correct colours on a
+  Solaris machine with a cheap graphics card.  There is a bug somewhere
+  (Sasami, Togl, Tk, X, OpenGL?) which causes Eden to use the wrong visual
+  and colormap when running using Solaris 8 X and OpenGL on a machine with
+  an 8-bit (old, low end) graphics card.  The easiest way to solve this
+  problem currently seems to be to link Eden using Mesa (which is most
+  simply described as an open-source OpenGL).
+
+gcc 2.8.1: to compile it - duh.  I /think/ it compiles OK with the Sun
+  cc as well.
+
+The usual UNIX system things: sed, ar, install (mentioned in the
+Makefiles but not yet used), grep and awk (if running the more obscure
+distribution tasks).
+
+
+Development tools
+-----------------
+
+If you want to change or debug Eden code, these might be useful.  The
+version numbers are for your rough guidance only: these versions seemed to
+work for me, and earlier versions may as well.
+
+autoconf 2.13: if you want to make a change to configure.in and
+  rebuild the configure script.  autoconf needs m4 to be installed - I
+  used m4 1.4.
+
+bison 1.28: (the GNU parser generator - a yacc replacement).  Needed
+  if you want to make changes to the notations Eden, Donald etc.  If
+  the distribution package has been built correctly, the generated
+  files should be there already, so you should only need bison if you
+  are changing the notations.  This version of bison is required: at
+  some point, later versions of bison seem to have removed the bison.simple
+  facility which we are using.  bison-1.27 works OK.
+
+dmalloc: if you want to debug nasty memory problems
+
+cvs: if you want to check in or out changes to the central SourceForge code
+  repository.
+
+Development notes:
+
+- If you are making substantial changes to the code, I'd suggest that you
+  use the automatic Makefile source code dependency checking to make sure
+  that the necessary source is recompiled when things are changed.  Follow
+  this process to set up the dependency information:
+    ./configure --enable-debug --enable-depend
+    gmake generate
+    gmake depend
+  I've specified gmake here as GNU make is probably required for this
+  (Solaris make gives "Unexpected end of line seen" after encountering the
+  ifeq GNU extension I've used, and it doesn't seem to interpret the
+  source.c source.d: deps rule appropriately).
+
+- If you want to compile non-optimised (for easy single-stepping using a
+  debugger), I'd recommend that you set the environment variable CFLAGS to
+  "-g -O0" and then re-make everything.
+
+
+Windows
+-------
+
+The port to the Windows platform uses cygwin.
+
+
+Run-time requirements
+---------------------
+
+tkeden uses various pnm image utilities (eg 'pnmscale') to do image
+manipulation for Scout.  tkeden expects to find these utilities in the
+PATH.  They are not required if your model does not use image scaling
+etc.
+
+
+BUILDING EDEN
+=============
+
+These instructions describe how to build an Eden variant on a
+UNIX-flavour machine (eg Solaris, Linux...).  Cygwin (which provides
+some UNIX-like facilities for Windows) is used to build Eden on
+Windows, and so the procedure there is similar, but different in some
+aspects.  Hopefully some documentation for the Windows build will be
+written at some point.
+
+Gunzip and untar your distribution, using something like:
+  gunzip tkeden.1.11.tar.gz
+  tar xvf tkeden.1.11.tar
+
+Change directory to within the tkeden directory you just untarred:
+  cd tkeden
+
+Hopefully your distribution will have a `configure' shell script.  If
+you've downloaded the source straight from CVS, however, you probably
+won't have one.  If you don't, generate `configure' and the Makefiles
+from the various `.in' (`configure.in', `Makefile.in'...) files by
+running:
+  autoconf
+
+Automatically probe your setup for the information we need to compile
+`tkeden' by running:
+  ./configure
+At the end of the probing, if you see errors such as
+  configure: warning: Could not locate tk - can probably only build ttyeden
+then examine `config.log' to see the tests that were run and the errors
+that were encountered.
+
+The `configure' script should figure out all that we need.
+Unfortunately, even though this may sound simple, it is actually a
+rather nasty and complex job, as machine configurations can vary
+widely.  Depending upon your setup, you may need to tell the
+`configure' script how to use other pieces of software.  If
+`configure' still moans, you might need to solve the problem with
+something like:
+  ./configure --with-tk-include="-I/usr/local/include" \
+    --with-tk-lib="-L/usr/local/lib -R/usr/local/lib -ltk8.2"
+(I've broken the line for readability).  See the available options by
+using
+  ./configure --help
+If you figure out what needs to be done to compile the software on
+your particular platform, if you are able, please modify configure.in
+and change the master copy of the source with CVS, or email me at
+ashley@dcs.warwick.ac.uk, giving me the details of what you needed to
+do, and I'll attempt to fix things so that you and others will not
+need to do this in the future.
+
+Choose the sort of Eden you wish to build:
+- `ttyeden' is the terminal based, non-graphical version,
+- `tkeden' is the `standard' version and
+- `dtkeden' is the one with distributed modelling facilities.
+
+I expect most people will choose to build `tkeden'.  The following
+instructions show how to build `tkeden': simply substitute one of the
+other target names if you want to build another variant.
+
+To compile tkeden, type
+  make tkeden
+
+Hopefully you will now have a tkeden binary in your directory.  I'd
+recommend trying this simple test to see if the binary will print out
+the usage information:
+  ./tkeden -u
+
+If that worked OK, try and run it normally with
+  ./tkeden -l ./lib-tkeden
+(the -l argument tells tkeden where to find some start-up files ---
+some older documentation may refer to the `$PUBLIC' environment
+variable, which used to be used to provide this information).
+
+After you've started `tkeden', I'd suggest checking the `Help -> About
+tkeden' menu to check that you are running the right version (and not
+a `tkeden' elsewhere on your PATH).
+
+Careful: you must (unfortunately) use
+  make clean
+before compiling a different variant (eg compiling dtkeden after
+having just done tkeden).  This is due to the extensive use of the C
+preprocessor in merging the different sources together - if you can
+figure out a better scheme, please implement it!  :)
+
+Installing: with `tkeden' and `dtkeden', you can put the binary
+anywhere as long as it is provided with the -l argument when it is
+invoked to tell it where the start-up library files are.  I'd suggest
+writing a wrapper shell script if you want to install it `properly'.
+There is no requirement to do this, of course --- you can just leave
+the binary where you found it after compilation.  `ttyeden' doesn't
+require the -l argument, so you should be able to put it anywhere on
+your PATH with no problems.  If you want to save some disc space, you
+can strip the binaries (eg `strip tkeden'), but I'd only recommend
+doing this if you anticipate never using a debugger on the code.
+
+If you want Scout to be able to display images from files formats other
+than just the Tk default PPM/PGM and GIF, follow the instructions provided
+with the Tk Img package to install it, and tkeden should detect and load it
+automatically at runtime.
+
+If it all works fine for you --- congratulations, and have fun.
+
+Ash, March 2001

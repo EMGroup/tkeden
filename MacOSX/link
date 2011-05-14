@@ -1,0 +1,4 @@
+#cc -dynamic -o tkeden Eden/libeden.a pcre-3.9/pcre.o Misc/libmisc.a Donald/libdonald.a Sasami/libsasami.a EX/libex.a Scout/libscout.a -framework Tk -framework Tcl -framework CoreFoundation -framework Carbon nothing.c
+#cc -o tkeden Eden/libeden.a Misc/libmisc.a Donald/libdonald.a Sasami/libsasami.a EX/libex.a Scout/libscout.a /Users/ashley/TclTkCVS/tk/macosx/build/Tk.framework/Tk /Users/ashley/TclTkCVS/tk/macosx/build/Tcl.framework/Tcl /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation /System/Library/Frameworks/Carbon.framework/Carbon nothing.c
+
+gcc -o tkeden Eden/libeden.a pcre-3.9/pcre.o Misc/libmisc.a Donald/libdonald.a Sasami/libsasami.a EX/libex.a Scout/libscout.a /Library/Frameworks/Tk.framework/Tk /Library/Frameworks/Tcl.framework/Tcl -framework CoreFoundation -framework Carbon nothing.c
