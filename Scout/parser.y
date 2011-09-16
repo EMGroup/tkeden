@@ -30,6 +30,7 @@ static char rcsid[] = "$Id: parser.y,v 1.16 2001/08/02 16:26:11 cssbz Exp $";
 #include "../config.h"
 #include "symbol.h"
 #include "tree.h"
+#include "parser.h"
 #include "../Eden/error.h"
 
 #include "../EX/script.h"
