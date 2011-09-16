@@ -1002,10 +1002,9 @@ yysyntax_error (char *yyresult, int yystate, int yychar)
 ]b4_push_if([],
 [[/* Prevent warnings from -Wmissing-prototypes.  */
 #ifdef YYPARSE_PARAM
-]b4_c_function_decl([yyparse], [int],
-   [[void *YYPARSE_PARAM], [YYPARSE_PARAM]])[
+]b4_c_function_decl([yyparse], [int], [int token])[
 #else /* ! YYPARSE_PARAM */
-]b4_c_function_decl([yyparse], [int], b4_parse_param)[
+]b4_c_function_decl([yyparse], [int], [int token])[
 #endif /* ! YYPARSE_PARAM */]])
 
 m4_divert_push([KILL])# ======================== M4 code.
@@ -1174,9 +1173,9 @@ b4_c_function_def([[yypush_parse]], [[int]],
   [[[YYLTYPE const *yypushed_loc]], [[yypushed_loc]]]])])m4_ifset([b4_parse_param], [,
   b4_parse_param]))], [
 #ifdef YYPARSE_PARAM
-b4_c_function_def([yyparse], [int], [[void *YYPARSE_PARAM], [YYPARSE_PARAM]])
+b4_c_function_def([yyparse], [int], [int token])
 #else /* ! YYPARSE_PARAM */
-b4_c_function_def([yyparse], [int], b4_parse_param)
+b4_c_function_def([yyparse], [int], [int token])
 #endif])[
 {
 ]b4_pure_if([b4_declare_scanner_communication_variables])
