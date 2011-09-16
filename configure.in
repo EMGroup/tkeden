@@ -521,6 +521,9 @@ AW_CHECK_TCL(, "-ltcl")
 
 # Now we're guessing...  :)
 
+# Good guess for ubuntu 10.10
+AW_CHECK_TCL("-I/usr/include/tcl8.4", "-ltcl")
+
 # This works at DCS, University of Warwick
 AW_CHECK_TCL("-I/usr/local/include", "-L/usr/local/lib -ltcl")
 
@@ -783,6 +786,9 @@ if test "$aw_want_sasami" = "yes"; then
 	if test -n "$aw_user_gl_include" -o -n "$aw_user_gl_lib"; then
 		AW_CHECK_GL($aw_user_gl_include, $aw_user_gl_lib)
 	fi
+
+	# Good guess for ubuntu 10.10
+	AW_CHECK_GL("-I/usr/include/GL", "-lGL")
 
 	# Else can we use GL with just -lGL?
 	AW_CHECK_GL(, "-lGL")
