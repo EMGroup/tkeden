@@ -296,7 +296,7 @@ asgn:	  lvalue '=' expr		{ code(assign); }
 					{ code(inc_asgn); }
 	| lvalue MINUS_EQ expr	%prec '='
 					{ code(dec_asgn); }
-	| lvalue '=' lvalue { code(getvalue); } SLASH_SLASH expr    %prec '='
+	/*| lvalue '=' lvalue { code(getvalue); } SLASH_SLASH expr    %prec '='
 					{ if ($1[1] == $3[1]) {
 					    // l = l // expr: optimise
 					    code(concatopt);
@@ -306,7 +306,7 @@ asgn:	  lvalue '=' expr		{ code(assign); }
 					    code(concat);
 					    code(assign);
 					  }
-					}
+					}*/
 	| PLUS_PLUS lvalue		{ code(pre_inc); $$ = $2; }
 	| lvalue PLUS_PLUS		{ code(post_inc); }
 	| MINUS_MINUS lvalue		{ code(pre_dec); $$ = $2; }
