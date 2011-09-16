@@ -614,10 +614,10 @@ void
 scout_err(char *s)
 {
     extern void yyrestart(void);
-    extern int  yy_parse_init;
+    extern int  initialise_parser_state;
 
     yyrestart();		/* reset lexical analyzer */
-    yy_parse_init = 1;		/* reset bison */
+    initialise_parser_state = 1;		/* reset bison */
 
     deleteScript(st_script);
 

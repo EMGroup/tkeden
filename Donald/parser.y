@@ -699,12 +699,12 @@ void
 don_err(enum errorcodes error_code, char *s)
 {
     extern void yyrestart(void);
-    extern int yy_parse_init;
+    extern int initialise_parser_state;
     char errStr[120];
     Tcl_DString err, message;
 
     yyrestart();		/* reset lexical analyzer */
-    yy_parse_init = 1;		/* reset bison */
+    initialise_parser_state = 1;		/* reset bison */
 
     deleteScript(dd_script);
 

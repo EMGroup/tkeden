@@ -1167,7 +1167,7 @@ b4_c_function_def([[yyparse]], [[int]], b4_parse_param)[
  * XXX: this flag determines whether we're jumping back into the function or if
  * we're starting a fresh
  */
-int initialise_parser_state = 1;
+static int initialise_parser_state = 1;
 
 #ifdef WANT_SETYYPARSEINIT
 setyyparseinit(int do_initialise_parser_state) {
@@ -1176,24 +1176,48 @@ setyyparseinit(int do_initialise_parser_state) {
 #endif
 
 /* XXX: move state for parser into globals so that we can jump in and out of it */
-]b4_declare_parser_state_variables[
-int yyn;
-int yyresult;
+static int yystate;
+
+/* Number of tokens to shift before error messages enabled */
+static int yyerrstatus;
+
+/* The stacks and their tools:
+   `yyss': related to states.
+   `yyvs': related to semantic values.
+
+   Refer to the stacks thru separate pointers, to allow yyoverflow
+   to reallocate them elsewhere.  */
+
+/* the state stack */
+/* yytype_int16 refers to a parser state */
+static yytype_int16 yyssa[YYINITDEPTH];
+static yytype_int16 *yyss;
+static yytype_int16 *yyssp;
+
+/* the semantic value stack */
+/* YYSTYPE refers to the "semantic value" */
+static YYSTYPE yyvsa[YYINITDEPTH];
+static YYSTYPE *yyvs;
+static YYSTYPE *yyvsp;
+
+static YYSIZE_T yystacksize;
+static int yyn;
+static int yyresult;
 /* Lookahead token as an internal (translated) token number.  */
-int yytoken;
+static int yytoken;
 /* The variables used to return semantic value and location from the
  action routines.  */
-YYSTYPE yyval;]b4_locations_if([[
-YYLTYPE yyloc;]])[
+static YYSTYPE yyval;]b4_locations_if([[
+static YYLTYPE yyloc;]])[
 
 #if YYERROR_VERBOSE
 /* Buffer for error messages, and its allocated size.  */
-char yymsgbuf[128];
-char *yymsg;
-YYSIZE_T yymsg_alloc;
+static char yymsgbuf[128];
+static char *yymsg;
+static YYSIZE_T yymsg_alloc;
 #endif
 
-int yylen;
+static int yylen;
 
 /*-------------------------.
 | yyparse or yypush_parse.  |
@@ -1216,28 +1240,24 @@ b4_push_if([b4_pure_if([], [[  int yypushed_char = yychar;
   YYSTYPE yypushed_val = yylval;
   ]b4_locations_if([[YYLTYPE yypushed_loc = yylloc;
 ]])])],
-  [b4_declare_parser_state_variables])[
-  int yyn;
-  int yyresult;
-  /* Lookahead token as an internal (translated) token number.  */
-  int yytoken;
-  /* The variables used to return semantic value and location from the
-     action routines.  */
-  YYSTYPE yyval;]b4_locations_if([[
-  YYLTYPE yyloc;]])[
+  [])[
+  unsigned char token_has_been_read = 0;
+  if (!initialise_parser_state)
+    goto lex;
+
+  initialise_parser_state = 0;
 
 #if YYERROR_VERBOSE
   /* Buffer for error messages, and its allocated size.  */
-  char yymsgbuf[128];
-  char *yymsg = yymsgbuf;
-  YYSIZE_T yymsg_alloc = sizeof yymsgbuf;
+  yymsg = yymsgbuf;
+  yymsg_alloc = sizeof yymsgbuf;
 #endif
 
 #define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N)]b4_locations_if([, yylsp -= (N)])[)
 
   /* The number of symbols on the RHS of the reduced rule.
      Keep to zero when no symbol should be popped.  */
-  int yylen = 0;]b4_push_if([[
+  yylen = 0;]b4_push_if([[
 
   if (!yyps->yynew)
     {
@@ -1406,7 +1426,11 @@ yyread_pushed_token:]])[
         yylval = *yypushed_val;]b4_locations_if([[
       if (yypushed_loc)
         yylloc = *yypushed_loc;]])])], [[
-      yychar = YYLEX;]])[
+lex:
+      if (token_has_been_read)
+        return -1;
+      token_has_been_read = 1;
+      yychar = token;]])[
     }
 
   if (yychar <= YYEOF)
