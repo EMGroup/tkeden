@@ -575,7 +575,7 @@ declare_relation:
 	  identifier tilde_gt '[' id_list_opt ']' ';'
 					{ $$ = code_related_by($1); }
 	/* related_by_runtimelhs by [Ash] */
-	| '`' expr '`'			{ $$ = $2; code(lookup_address); }
+	| '`' expr '`'			{ $<inst>$ = $2; code(lookup_address); }
 	  tilde_gt '[' id_list_opt ']' ';'
 					{ $$ = code_related_by_runtimelhs(); }
 	;
