@@ -1162,6 +1162,39 @@ b4_c_function_def([[yyparse]], [[int]], b4_parse_param)[
 #define yyerror_range yyps->yyerror_range
 ]])[#define yystacksize yyps->yystacksize
 ]])[
+
+/*
+ * XXX: this flag determines whether we're jumping back into the function or if
+ * we're starting a fresh
+ */
+int initialise_parser_state = 1;
+
+#ifdef WANT_SETYYPARSEINIT
+setyyparseinit(int do_initialise_parser_state) {
+	initialise_parser_state = do_initialise_parser_state;
+}
+#endif
+
+/* XXX: move state for parser into globals so that we can jump in and out of it */
+]b4_declare_parser_state_variables[
+int yyn;
+int yyresult;
+/* Lookahead token as an internal (translated) token number.  */
+int yytoken;
+/* The variables used to return semantic value and location from the
+ action routines.  */
+YYSTYPE yyval;]b4_locations_if([[
+YYLTYPE yyloc;]])[
+
+#if YYERROR_VERBOSE
+/* Buffer for error messages, and its allocated size.  */
+char yymsgbuf[128];
+char *yymsg;
+YYSIZE_T yymsg_alloc;
+#endif
+
+int yylen;
+
 /*-------------------------.
 | yyparse or yypush_parse.  |
 `-------------------------*/
