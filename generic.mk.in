@@ -47,7 +47,7 @@ ALLCFLAGS = -g -D$(VARIANT) \
 		$(READLINE_INCLUDE) $(OPENGL_INCLUDE) $(PNG_INCLUDE) \
 		$(DEFS) $(X_CFLAGS) $(CONF_CFLAGS) $(CFLAGS)
 
-PARSER_SKEL = ../bison/bison.simple
+PARSER_SKEL = ../bison/custom_yacc.c
 
 PARSER_OBJ = $(PARSER_OUT:.c=.o)
 
@@ -73,10 +73,8 @@ $(LIB):		$(OBJS)
 # -p instead.  If NOTATION_PREFIX is blank, don't do the -p option.
 $(PARSER_OUT):	$(PARSER_SOURCE) $(PARSER_SKEL)
 		if test -z "$(NOTATION_PREFIX)"; \
-		then BISON_SIMPLE=$(PARSER_SKEL) \
-			$(BISON) -v --defines -o $@ $(PARSER_SOURCE); \
-		else BISON_SIMPLE=$(PARSER_SKEL) \
-			$(BISON) -v -p $(NOTATION_PREFIX) \
+		then $(BISON) -S $(PARSER_SKEL) -v --defines -o $@ $(PARSER_SOURCE); \
+		else $(BISON) -S $(PARSER_SKEL) -v -p $(NOTATION_PREFIX) \
 			--defines -o $@ $(PARSER_SOURCE); fi
 
 # Bison's -p fails to translate the yyrestart name, so do it here...
