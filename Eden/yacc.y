@@ -236,7 +236,7 @@ extern void push_text(char *, int);
 %left   '+' '-' SLASH_SLASH
 %left   '*' '/' '%'
 %nonassoc  NEGATE NOT '!' PLUS_PLUS MINUS_MINUS '#' '&' ASTERISK EVAL
-%expect 6
+%expect 7
 %%
 program:     /* nothing */
 	| stmt			{ code2(freeheap, rts);
@@ -296,7 +296,7 @@ asgn:	  lvalue '=' expr		{ code(assign); }
 					{ code(inc_asgn); }
 	| lvalue MINUS_EQ expr	%prec '='
 					{ code(dec_asgn); }
-	/*| lvalue '=' lvalue { code(getvalue); } SLASH_SLASH expr    %prec '='
+	| lvalue '=' primary SLASH_SLASH expr    %prec '='
 					{ if ($1[1] == $3[1]) {
 					    // l = l // expr: optimise
 					    code(concatopt);
@@ -306,7 +306,7 @@ asgn:	  lvalue '=' expr		{ code(assign); }
 					    code(concat);
 					    code(assign);
 					  }
-					}*/
+					}
 	| PLUS_PLUS lvalue		{ code(pre_inc); $$ = $2; }
 	| lvalue PLUS_PLUS		{ code(post_inc); }
 	| MINUS_MINUS lvalue		{ code(pre_dec); $$ = $2; }
