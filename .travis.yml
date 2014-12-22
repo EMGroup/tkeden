@@ -12,6 +12,6 @@ deploy:
   file: ttyeden
   on:
     repo: EMGroup/tkeden
-  branches:
-    only:
-      - master
+    branches:
+      only:
+        - master
