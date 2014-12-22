@@ -1,8 +1,14 @@
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq bison flex libncurses5-dev
-
+- sudo apt-get update -qq
+- sudo apt-get install -qq bison flex libncurses5-dev
 script:
-  - ./ubuntu-12.04.configure
-  - make pcre
-  - make ttyeden
+- ./ubuntu-12.04.configure
+- make pcre
+- make ttyeden
+deploy:
+  provider: releases
+  api_key:
+    secure: c3M50ESSFVdjYnPIcG2m8C2z4PE/KWVDgriurfzz4FEulyWKaYpmLOvYqDRX1Uz/bYMOrhwebHV4t51U2Cxqp+OxLNzvYtCIfd1YDyTg8fIXo/Ukqu68Y/IH0xbeASPDOZyzrPF+fUEycxWfr0ghpC6McXE8En6G5Pc2fA96g+g=
+  file: ttyeden
+  on:
+    repo: EMGroup/tkeden
