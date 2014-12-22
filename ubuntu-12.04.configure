@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Build suitable pcre
+make pcre
+
+# Configure
+./configure \
+--enable-debug --enable-depend \
+--with-curses-include="/usr/include" \
+--with-readline-include="-I/usr/include/readline" \
+--with-readline-lib="-lreadline"
